@@ -1,10 +1,7 @@
 "use client"
 
-import ReduxProvider from "@/redux/redux-provider";
-import ChatCardListStudent from "./chatCardList/ChatCardListStudent";
-import ChatGroupListEmployer from "./chatCardList/employer/ChatGroupListEmployer";
-import getIsStudent from "@/actions/authentication/getIsStudent";
-import getUserId from "@/actions/authentication/getUserId";
+import ChatCardListStudent from "./chatCardList/ChatCardList";// import getIsStudent from "@/actions/authentication/getIsStudent";
+// import getUserId from "@/actions/authentication/getUserId";
 import { useEffect } from "react"
 
 type Props = {
@@ -15,24 +12,14 @@ type Props = {
 export default function MobileChatPage({ isStudent, userId }: Props) {
 
     return (
-        <ReduxProvider>
-            <div className="rounded-3xl bg-slate-50 min-h-[80vh] py-5">
-                {isStudent ? (
-                    // TODO : Mobile Student Chat list
-                    userId !== null && (
-                        <div>
-                            <ChatCardListStudent studentId={userId} />
-                        </div >
-                    )
-                ) : (
-                    // TODO : Mobile Employer Chat list
-                    userId !== null && (
-                        <div>
-                            <ChatGroupListEmployer employerId={userId} />
-                        </div>
-                    )
+        <div className="rounded-3xl bg-slate-50 min-h-full py-5">
+            {
+                // TODO : Mobile Student Chat list
+                userId !== null && (
+                    <div>
+                        <ChatCardListStudent studentId={userId} />
+                    </div >
                 )}
-            </div>
-        </ReduxProvider>
+        </div>
     )
 }

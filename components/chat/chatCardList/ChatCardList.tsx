@@ -1,27 +1,27 @@
 "use client"
 
-import ChatCardStudent from "./ChatCardStudent"
+import ChatCard from "./ChatCard"
 // import { getStudentChatListData } from "@/actions/chat/getChatListDataByUser"
 import { useEffect, useState } from "react"
-import { StudentChatListData } from "@/lib/chatInterface"
-import { useAppSelector } from "@/redux/store"
-import ChatCardStudentLoading from "./ChatCardStudentLoading"
+import { ChatListData } from "@/lib/chatInterface"
+import ChatCardLoading from "./ChatCardLoading"
 import SearchNotFound from "@/components/loadingAndError/SearchNotFound"
+import axios from "axios"
 
 type Props = {
     studentId: string
 }
 
-export default function ChatCardListStudent({ studentId }: Props) {
-    const [employers, setEmployers] = useState<StudentChatListData[]>([])
+export default function ChatCardList({ studentId }: Props) {
+    const [users, setUsers] = useState<ChatListData[]>([])
     const [loading, setLoading] = useState<boolean>(true);
-    const chatListReloadState = useAppSelector((state: { chatList: { chatListReloadState: boolean } }) => state.chatList.chatListReloadState);
-    // const employers = await getStudentChatListData(studentId)
-    // console.log("Initial state: ", chatListReloadState)
+
     useEffect(() => {
+        // TODO: filter ตัวเองออก
         async function getChatList() {
             try {
-                setEmployers(await getStudentChatListData(studentId));
+                const res = await axios.get('http://localhost:3001/api/privateChat')
+                setUsers(res.data.data);
             } catch (err) {
                 console.log("Error setEmployer: ", err)
                 return;
@@ -33,16 +33,16 @@ export default function ChatCardListStudent({ studentId }: Props) {
         getChatList();
         // console.log("New state: ", chatListReloadState)
 
-    }, [chatListReloadState])
+    }, [])
 
     return (
         <>
             {loading ? (
                 Array.from({ length: 12 }).map((_, index) => (
-                    <ChatCardStudentLoading key={index} />
+                    <ChatCardLoading key={index} />
                 ))
-            ) : employers.length ? (
-                employers.map((employer, index) => <ChatCardStudent key={index} employer={employer} />)
+            ) : users.length ? (
+                users.map((user, index) => <ChatCard key={index} user={user} />)
             ) : (
                 <div className="col-span-full">
                     <SearchNotFound text="ไม่พบห้องแชท" />

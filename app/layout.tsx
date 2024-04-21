@@ -8,34 +8,34 @@ import { cn } from "@/lib/utils";
 
 const inter = Inter({ subsets: ["latin"] });
 const ibmPlexSansThaiLooped = IBM_Plex_Sans_Thai({
-    weight: ["100", "200", "300", "400", "500", "600", "700"],
-    subsets: ["thai"],
-    variable: "--ibm-plex-sans-thai-font",
+  weight: ["100", "200", "300", "400", "500", "600", "700"],
+  subsets: ["thai"],
+  variable: "--ibm-plex-sans-thai-font",
 });
 
 export const metadata: Metadata = {
-    title: "The Beatles Chat",
-    description: "Chat by The Beatles",
+  title: "The Beatles Chat",
+  description: "Chat by The Beatles",
 };
 
 export default function RootLayout({
-    children,
+  children,
 }: Readonly<{
-    children: React.ReactNode;
+  children: React.ReactNode;
 }>) {
-    return (
-        <html lang="en">
-            <head>
-                <link rel="shortcut icon" type="x-icon" href="/icons/logo.svg" />
-            </head>
-            <body
-                className={cn(
-                    inter.className,
-                    ibmPlexSansThaiLooped.className,
-                    "h-screen",
-                )}
-            >
-                {/* <AuthProvider>
+  return (
+    <html lang="en">
+      <head>
+        <link rel="shortcut icon" type="x-icon" href="/icons/logo.svg" />
+      </head>
+      <body
+        className={cn(
+          inter.className,
+          ibmPlexSansThaiLooped.className,
+          "h-screen",
+        )}
+      >
+        {/* <AuthProvider>
           <Toaster
             position="bottom-right"
             toastOptions={{
@@ -60,9 +60,9 @@ export default function RootLayout({
               },
             }}
           /> */}
-                {children}
-                {/* </AuthProvider> */}
-            </body>
-        </html>
-    );
+        {children}
+        {/* </AuthProvider> */}
+      </body>
+    </html>
+  );
 }

@@ -1,4 +1,4 @@
-export default function ChatCardStudentLoading() {
+export default function ChatCardLoading() {
     return (
         <div
             className={`animate-pulse flex flex-row items-center h-[90px] px-[16px] py-[21px] rounded-[16px] lg:h-[94px] lg:py-[20px]`}

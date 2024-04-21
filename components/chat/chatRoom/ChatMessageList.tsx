@@ -4,8 +4,6 @@ import { useRef, useEffect, useState } from "react"
 import { MessagesGroupByDate, getMessageByChatRoom } from "@/lib/chatInterface"
 import { setIncommingMessageHandler } from "../clientSocket/clientSocket"
 import { constructIncommingMessageHandler } from "../clientSocket/utils"
-import { useAppDispatch, useAppSelector } from "@/redux/store"
-import { toggleChatListReload } from "@/redux/features/chatListSlice";
 
 type Props = {
     isStudent: boolean,
@@ -21,12 +19,6 @@ export default function ChatMessageList({ chatroomId, senderId }: Props) {
     const [messagesByDate, setMessagesByDate] = useState<MessagesGroupByDate[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
-    const dispatch = useAppDispatch();
-    if (toDispatch) {
-        // console.log("Dispatching from If");
-        dispatch(toggleChatListReload());
-        toDispatch = false;
-    }
     // const chatListReloadState = useAppSelector((state) => state.chatList.chatListReloadState);
 
     useEffect(() => {
@@ -34,10 +26,6 @@ export default function ChatMessageList({ chatroomId, senderId }: Props) {
         setIncommingMessageHandler(incommingMessageHandler);
     }, []);
 
-    useEffect(() => {
-        dispatch(toggleChatListReload());
-        toDispatch = true;
-    }, [messagesByDate]);
 
     const bottomOfPanelRef = useRef<HTMLDivElement>(null)
 

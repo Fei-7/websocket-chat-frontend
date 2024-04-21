@@ -11,23 +11,9 @@ export interface MessagesGroupByDate {
     Messages: Message[];
 }
 
-export interface StudentChatListData {
-    jobId: string;
-    jobTitle: string;
-    chatrooms: {
-        chatroomId: string;
-        latestMessage: Message | null;
-        employer: {
-            profileImageUrl: string | null;
-            employerId: string;
-            salutation: string;
-            firstname: string;
-            middlename: string | null;
-            lastname: string;
-            position: string;
-            organization: string;
-        };
-    }[];
+export interface ChatListData {
+    id: string;
+    username: string;
 }
 
 export interface EmployerChatListData {
