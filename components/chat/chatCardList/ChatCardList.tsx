@@ -20,6 +20,7 @@ export default function ChatCardList({ studentId }: Props) {
     const [loading, setLoading] = useState<boolean>(true);
     const [onlineUsers, setOnlineUsers] = useState<ChatListData[]>([])
     const [offlineUsers, setOfflineUsers] = useState<ChatListData[]>([])
+    const [id, setId] = useState<string>('')
 
     useEffect(() => {
         async function getChatList() {
@@ -31,11 +32,10 @@ export default function ChatCardList({ studentId }: Props) {
                     withCredentials: true
                 })
                 const me_id = me.data.data.id
-                console.log("USing effect");
+                // console.log("USing effect");
                 connect("", me_id)
                 setUsers(res.data.data.filter((user: { id: any }) => user.id !== me_id));
-
-                
+                setId(me_id)
             } catch (err) {
                 console.log("Error setEmployer: ", err)
                 return;
@@ -43,16 +43,17 @@ export default function ChatCardList({ studentId }: Props) {
                 setLoading(false)
             }
         }
-        
+
         getChatList();
         // console.log("New state: ", chatListReloadState)
-        
+
     }, []);
-    
+
     if (firstLoad) {
         console.log("first load");
         socket.on("online users update", (onlineUsers) => {
-            console.log("PING", onlineUsers)
+            // console.log("PING", onlineUsers)
+            // TODO: Separate online and offline users
         });
         firstLoad = false;
     }
@@ -65,7 +66,7 @@ export default function ChatCardList({ studentId }: Props) {
                 ))
             ) : users.length ? (
 
-                users.map((user, index) => <ChatCard key={index} user={user} />)
+                users.map((user, index) => <ChatCard key={index} user={user} id={id} />)
             ) : (
                 <div className="col-span-full">
                     <SearchNotFound text="ไม่พบห้องแชท" />

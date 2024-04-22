@@ -1,19 +1,47 @@
 "use client"
 
-import ReduxProvider from "@/redux/redux-provider";
+// import ReduxProvider from "@/redux/redux-provider";
 import ChatRoom from "./chatRoom/ChatRoom";
+import { useEffect, useState } from "react"
+import axios from "axios";
+import { Sender } from "@/lib/chatInterface";
 
 type Props = {
-    isStudent: boolean,
     chatroomId: string,
-    senderId: string
+    // senderId: string
 }
 
-export default function ChatRoomSection({ isStudent, chatroomId, senderId }: Props) {
+export default function ChatRoomSection({ chatroomId }: Props) {
+    const [sender, setSender] = useState<Sender>({
+        id: '',
+        username: '',
+        chatRooms: []
+    })
+    // console.log("Sender: ", sender)
+    useEffect(() => {
+        async function getSenderId() {
+            try {
+                const me = await axios.get('http://localhost:3001/api/auth/me', {
+                    withCredentials: true
+                })
+                setSender(me.data.data)
+            } catch (err) {
+                console.log("Error getSenderId: ", err)
+                return;
+            } finally {
+                // setLoading(false)
+            }
+        }
+
+        getSenderId();
+        // console.log("New state: ", chatListReloadState)
+
+    }, []);
+
 
     return (
-        <ReduxProvider>
-            <ChatRoom isStudent={isStudent} chatroomId={chatroomId} senderId={senderId} />
-        </ReduxProvider>
+        // <ReduxProvider>
+        <ChatRoom chatroomId={chatroomId} sender={sender} />
+        // </ReduxProvider>
     )
 }

@@ -34,24 +34,17 @@ export interface EmployerChatListData {
 }
 
 export interface ChatRoomInfo {
-    student: {
+    name?: string;
+    isGroup: boolean;
+    userIds: string[];
+    users: {
         id: string;
-        salutation: string;
-        firstname: string;
-        middlename: string | null;
-        lastname: string;
-    };
-    employer: {
-        id: string;
-        salutation: string;
-        firstname: string;
-        middlename: string | null;
-        lastname: string;
-        position: string;
-        organization: string;
-    };
-    job: {
-        id: string;
-        title: string;
-    };
+        username: string;
+    }[];
+};
+
+export interface Sender {
+    id: string;
+    username: string;
+    chatRooms: any;
 };

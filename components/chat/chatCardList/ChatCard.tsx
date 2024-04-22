@@ -7,12 +7,14 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { connect } from "@/websocket/clientSocket"
 
 type Props = {
-    user: ChatListData
+    user: ChatListData;
+    id: string
 }
 
-export default function ChatCard({ user }: Props) {
+export default function ChatCard({ user, id }: Props) {
     const pathName = usePathname();
     // const isChatRoom = pathName.endsWith(user.chatrooms[0].chatroomId)
     const avatar = noavatar;
@@ -30,11 +32,14 @@ export default function ChatCard({ user }: Props) {
     // }
     const handleOnClick = async () => {
         try {
+            if (!id) console.log("NO ID JAAA")
             const chatInfo = await axios.get('http://localhost:3001/api/privateChat/' + user.id, {
                 withCredentials: true
             });
-            console.log(chatInfo.data)
-            // router.push(`/chat/${chatInfo._id}`);
+            const chatRoomId = chatInfo.data.data.id
+            // console.log(chatInfo.data)
+            connect(chatRoomId, id)
+            router.push(`/chat/${chatRoomId}`);
         } catch (err) {
             console.log('Error getChatInfo: ', err)
         }

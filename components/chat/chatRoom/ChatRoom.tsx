@@ -2,23 +2,38 @@
 import ChatRoomHeader from "./ChatRoomHeader"
 import ChatMessageList from "./ChatMessageList"
 import ChatInput from "./ChatInput"
-import { ChatRoomInfo, getChatRoomInfo } from "@/lib/chatInterface"
+import { ChatRoomInfo, Sender, getChatRoomInfo } from "@/lib/chatInterface"
 import { useEffect, useState } from "react"
 import { connect } from "../clientSocket/clientSocket";
+import axios from "axios"
 
 type Props = {
-    isStudent: boolean,
     chatroomId: string,
-    senderId: string
+    sender: Sender
 }
 
-export default function ChatRoom({ isStudent, chatroomId, senderId }: Props) {
-    const [chatRoomInfo, setChatRoomInfo] = useState<ChatRoomInfo>();
-
+export default function ChatRoom({ chatroomId, sender }: Props) {
+    const [chatRoomInfo, setChatRoomInfo] = useState<ChatRoomInfo>({
+        name: '',
+        isGroup: false,
+        userIds: [],
+        users: [{
+            id: '',
+            username: '',
+        },
+        {
+            id: '',
+            username: '',
+        }]
+    });
+    console.log("Chatroom info: ", chatRoomInfo)
     useEffect(() => {
         async function getInitialData() {
             try {
-                setChatRoomInfo(await getChatRoomInfo(chatroomId));
+                const res = await axios.get('http://localhost:3001/api/groupChat/' + chatroomId, {
+                    withCredentials: true
+                })
+                setChatRoomInfo(res.data.data);
             } catch (err) {
                 console.log(err)
                 return;
@@ -32,12 +47,12 @@ export default function ChatRoom({ isStudent, chatroomId, senderId }: Props) {
     // connect to websocket with specific chatroomId and senderId
     // put it here to make sure that setIncommingMessageHandler is called after socket connection is called
     // put it here because useEffect triggers in child components before parent component
-    connect(chatroomId, senderId);
-
+    connect(chatroomId, sender.id);
+    const isStudent = false
     return (
         <div className="h-[100dvh] w-full flex flex-col bg-neutral-100 border border-[#CBD5E1] lg:h-[80vh]">
-            <ChatRoomHeader isStudent={isStudent} chatRoomInfo={chatRoomInfo} />
-            <ChatMessageList isStudent={isStudent} chatroomId={chatroomId} senderId={senderId} />
+            <ChatRoomHeader isStudent={isStudent} chatRoomInfo={chatRoomInfo} sender={sender} />
+            <ChatMessageList isStudent={isStudent} chatroomId={chatroomId} senderId={sender.id} />
             <ChatInput isStudent={isStudent} chatroomId={chatroomId} />
         </div>
     )
