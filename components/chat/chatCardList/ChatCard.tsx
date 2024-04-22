@@ -38,7 +38,7 @@ export default function ChatCard({ user, id }: Props) {
             });
             const chatRoomId = chatInfo.data.data.id
             // console.log(chatInfo.data)
-            connect(chatRoomId, id)
+            // connect(chatRoomId, id)
             router.push(`/chat/${chatRoomId}`);
         } catch (err) {
             console.log('Error getChatInfo: ', err)

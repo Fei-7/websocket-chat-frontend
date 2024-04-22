@@ -24,6 +24,7 @@ export default function ChatRoomSection({ chatroomId }: Props) {
                 const me = await axios.get('http://localhost:3001/api/auth/me', {
                     withCredentials: true
                 })
+                console.log(me.data.data);
                 setSender(me.data.data)
             } catch (err) {
                 console.log("Error getSenderId: ", err)

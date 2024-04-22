@@ -4,7 +4,7 @@ import ChatMessageList from "./ChatMessageList"
 import ChatInput from "./ChatInput"
 import { ChatRoomInfo, Sender } from "@/lib/chatInterface"
 import { useEffect, useState } from "react"
-import { connect } from "../clientSocket/clientSocket";
+import { connect } from "@/websocket/clientSocket";
 import axios from "axios"
 
 type Props = {
@@ -43,7 +43,8 @@ export default function ChatRoom({ chatroomId, sender }: Props) {
         getInitialData();
 
     }, [])
-
+    console.log("chatromoId", chatroomId);
+    console.log("sendier id", sender.id);
     // connect to websocket with specific chatroomId and senderId
     // put it here to make sure that setIncommingMessageHandler is called after socket connection is called
     // put it here because useEffect triggers in child components before parent component

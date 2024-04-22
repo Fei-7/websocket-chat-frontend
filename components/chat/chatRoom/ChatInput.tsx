@@ -3,7 +3,7 @@ import { FormEvent, ChangeEvent, useState, useRef } from "react"
 import Image from "next/image";
 import sendButton from "@/public/icons/sendButton.svg";
 import imageButton from "@/public/icons/imageButton.svg";
-import { sendMessage, sendImage } from "../clientSocket/clientSocket";
+import { sendMessage, sendImage } from "@/websocket/clientSocket";
 // import { toggleChatListReload } from "@/redux/features/chatListSlice";
 // import { useAppDispatch } from "@/redux/store";
 

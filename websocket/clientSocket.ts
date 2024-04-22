@@ -14,7 +14,11 @@ function isImageFile(file: File | undefined) {
 
 export function connect(chatroomId: string, userId: string) {
     // won't connect again if chatroomId doesn't change to prevent bugs
+    if (userId === "") return;
     if (chatroomId === curChatroomId) return;
+
+    console.log('chatroom = ', chatroomId);
+    console.log('userid = ', userId);
 
     socket.disconnect();
 
@@ -22,7 +26,7 @@ export function connect(chatroomId: string, userId: string) {
     
     socket.emit("new connection", {
         userId: userId,
-        chatroomId: chatroomId
+        chatRoomId: chatroomId
     })
 
     // remember current chatroomId
@@ -63,9 +67,18 @@ export async function sendImage(imageFile: File) {
     socket.emit('chat image message', messageToServer);
 };
 
+let i = 0;
+
 // type any because socket.on event handler also any type
 export function setIncommingMessageHandler(inComingMessageHandler: any) {
     // set the handler to events
+    console.log(i++);
+
+    socket.removeAllListeners('chat image message');
+    socket.removeAllListeners('chat text message');
+
     socket.on('chat image message', inComingMessageHandler);
     socket.on('chat text message', inComingMessageHandler);
+
+    console.log(socket.listeners('chat text message'));
 }

@@ -33,7 +33,9 @@ export default function ChatCardList({ studentId }: Props) {
                 })
                 const me_id = me.data.data.id
                 // console.log("USing effect");
-                connect("", me_id)
+                if (!socket.connected) {
+                    connect("", me_id)
+                }
                 setUsers(res.data.data.filter((user: { id: any }) => user.id !== me_id));
                 setId(me_id)
             } catch (err) {

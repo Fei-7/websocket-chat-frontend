@@ -2,8 +2,8 @@
 import ChatMessageListByDate from "./ChatMessageListByDate"
 import { useRef, useEffect, useState } from "react"
 import { ChatRoomInfo, MessagesGroupByDate } from "@/lib/chatInterface"
-import { setIncommingMessageHandler } from "../clientSocket/clientSocket"
-import { constructIncommingMessageHandler } from "../clientSocket/utils"
+import { setIncommingMessageHandler } from "@/websocket/clientSocket"
+import { constructIncommingMessageHandler } from "@/websocket/utils"
 import axios from "axios"
 
 type Props = {
@@ -14,6 +14,8 @@ type Props = {
 }
 
 let toDispatch: boolean = true;
+let firstLoad: boolean = true;
+let curChatRoomId: string = "";
 
 export default function ChatMessageList({ chatroomId, chatRoomInfo, senderId }: Props) {
     // console.log("Rendering chat message list");
@@ -24,8 +26,13 @@ export default function ChatMessageList({ chatroomId, chatRoomInfo, senderId }: 
     // const chatListReloadState = useAppSelector((state) => state.chatList.chatListReloadState);
 
     useEffect(() => {
-        const incommingMessageHandler = constructIncommingMessageHandler(setMessagesByDate/*, dispatch, toggleChatListReload*/);
-        setIncommingMessageHandler(incommingMessageHandler);
+        if (firstLoad || curChatRoomId !== chatroomId) {
+            const incommingMessageHandler = constructIncommingMessageHandler(setMessagesByDate/*, dispatch, toggleChatListReload*/);
+            setIncommingMessageHandler(incommingMessageHandler);
+            console.log("SEETING");
+            firstLoad = false;
+            curChatRoomId = chatroomId;
+        }
     }, []);
 
 
@@ -38,6 +45,9 @@ export default function ChatMessageList({ chatroomId, chatRoomInfo, senderId }: 
                 const res = await axios.get(`http://localhost:3001/api/${chatRoomInfo?.isGroup ? "groupChat" : "privateChat"}/` + id + '/messages', {
                     withCredentials: true
                 })
+
+                // for (let i=0;i<res.data.data.length)
+
                 setMessagesByDate(res.data.data);
                 setIsLoading(false)
             } catch (err) {

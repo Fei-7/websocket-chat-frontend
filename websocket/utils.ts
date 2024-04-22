@@ -30,6 +30,13 @@ export function constructIncommingMessageHandler(
             // get the latest messages group. where the group is grouped by date
             const latestMessageByDate = messagesByDate.length !== 0 ? messagesByDate[messagesByDate.length - 1] : undefined;
 
+            if (latestMessageByDate) {
+                const latestMessage = latestMessageByDate.Messages[latestMessageByDate.Messages.length - 1];
+                if (latestMessage.id === newMessage.id) {
+                    return messagesByDate;
+                }
+            }
+
             // check if incomming message's date is the same as the latest
             if (!latestMessageByDate || latestMessageByDate.Date !== newMessageDate.toDateString()) {
                 // construct a new messageByDate group with the incomming message
