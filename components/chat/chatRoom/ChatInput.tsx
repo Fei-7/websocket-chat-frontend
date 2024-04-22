@@ -8,11 +8,11 @@ import { sendMessage, sendImage } from "../clientSocket/clientSocket";
 // import { useAppDispatch } from "@/redux/store";
 
 type Props = {
-    isStudent: boolean,
+    // isStudent: boolean,
     chatroomId: string
 }
 
-export default function ChatInput({ isStudent, chatroomId }: Props) {
+export default function ChatInput({ chatroomId }: Props) {
     const [input, setInput] = useState({
         text: "",
     });

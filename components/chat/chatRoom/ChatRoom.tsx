@@ -2,7 +2,7 @@
 import ChatRoomHeader from "./ChatRoomHeader"
 import ChatMessageList from "./ChatMessageList"
 import ChatInput from "./ChatInput"
-import { ChatRoomInfo, Sender, getChatRoomInfo } from "@/lib/chatInterface"
+import { ChatRoomInfo, Sender } from "@/lib/chatInterface"
 import { useEffect, useState } from "react"
 import { connect } from "../clientSocket/clientSocket";
 import axios from "axios"
@@ -26,7 +26,7 @@ export default function ChatRoom({ chatroomId, sender }: Props) {
             username: '',
         }]
     });
-    console.log("Chatroom info: ", chatRoomInfo)
+    // console.log("Chatroom info: ", chatRoomInfo)
     useEffect(() => {
         async function getInitialData() {
             try {
@@ -48,12 +48,12 @@ export default function ChatRoom({ chatroomId, sender }: Props) {
     // put it here to make sure that setIncommingMessageHandler is called after socket connection is called
     // put it here because useEffect triggers in child components before parent component
     connect(chatroomId, sender.id);
-    const isStudent = false
+    // const isStudent = false
     return (
         <div className="h-[100dvh] w-full flex flex-col bg-neutral-100 border border-[#CBD5E1] lg:h-[80vh]">
-            <ChatRoomHeader isStudent={isStudent} chatRoomInfo={chatRoomInfo} sender={sender} />
-            <ChatMessageList isStudent={isStudent} chatroomId={chatroomId} senderId={sender.id} />
-            <ChatInput isStudent={isStudent} chatroomId={chatroomId} />
+            <ChatRoomHeader chatRoomInfo={chatRoomInfo} sender={sender} />
+            <ChatMessageList chatroomId={chatroomId} chatRoomInfo={chatRoomInfo} senderId={sender.id} />
+            <ChatInput chatroomId={chatroomId} />
         </div>
     )
 }

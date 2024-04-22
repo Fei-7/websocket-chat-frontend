@@ -7,12 +7,12 @@ import Link from "next/link";
 import { send } from "process";
 
 type Props = {
-    isStudent: boolean,
+    // isStudent: boolean,
     chatRoomInfo: ChatRoomInfo,
     sender: Sender
 }
 
-export default function ChatRoomHeader({ isStudent, chatRoomInfo, sender }: Props) {
+export default function ChatRoomHeader({ chatRoomInfo, sender }: Props) {
     const title = chatRoomInfo?.isGroup ? chatRoomInfo.name : chatRoomInfo.users[0].id === sender.id ? chatRoomInfo.users[1].username : chatRoomInfo.users[0].username
     // const subtitle_1 = isStudent ? `${chatRoomInfo?.employer?.firstname || ""} ${chatRoomInfo?.employer?.middlename || ""} ${chatRoomInfo?.employer?.lastname || ""}` : ""
     // const subtitle_2 = isStudent ? `${chatRoomInfo?.employer?.position ? ", " : ""}${chatRoomInfo?.employer?.position || ""}${chatRoomInfo?.employer?.organization ? ", " : ""} ${chatRoomInfo?.employer?.organization}` : chatRoomInfo?.job?.title

@@ -1,19 +1,21 @@
 "use client"
 import ChatMessageListByDate from "./ChatMessageListByDate"
 import { useRef, useEffect, useState } from "react"
-import { MessagesGroupByDate, getMessageByChatRoom } from "@/lib/chatInterface"
+import { ChatRoomInfo, MessagesGroupByDate } from "@/lib/chatInterface"
 import { setIncommingMessageHandler } from "../clientSocket/clientSocket"
 import { constructIncommingMessageHandler } from "../clientSocket/utils"
+import axios from "axios"
 
 type Props = {
-    isStudent: boolean,
+    // isStudent: boolean,
     chatroomId: string,
+    chatRoomInfo: ChatRoomInfo,
     senderId: string
 }
 
 let toDispatch: boolean = true;
 
-export default function ChatMessageList({ chatroomId, senderId }: Props) {
+export default function ChatMessageList({ chatroomId, chatRoomInfo, senderId }: Props) {
     // console.log("Rendering chat message list");
     // console.log("toDispatch = ", toDispatch);
     const [messagesByDate, setMessagesByDate] = useState<MessagesGroupByDate[]>([]);
@@ -32,8 +34,13 @@ export default function ChatMessageList({ chatroomId, senderId }: Props) {
     useEffect(() => {
         async function getInitialData() {
             try {
-                setMessagesByDate(await getMessageByChatRoom(chatroomId));
+                const id = chatRoomInfo?.isGroup ? chatroomId : chatRoomInfo.users[0].id === senderId ? chatRoomInfo.users[1].id : chatRoomInfo.users[0].id
+                const res = await axios.get(`http://localhost:3001/api/${chatRoomInfo?.isGroup ? "groupChat" : "privateChat"}/` + id + '/messages', {
+                    withCredentials: true
+                })
+                setMessagesByDate(res.data.data);
                 setIsLoading(false)
+
             } catch (err) {
                 console.log(err)
                 return;
@@ -41,6 +48,7 @@ export default function ChatMessageList({ chatroomId, senderId }: Props) {
         }
 
         getInitialData();
+
     }, [])
 
     useEffect(() => {
