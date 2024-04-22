@@ -5,7 +5,7 @@ import { Socket, io } from "socket.io-client";
 const websocketServerURL = "https://websocket-6ajomlbega-uc.a.run.app/";
 
 let curChatroomId: string;
-let socket: Socket = io(websocketServerURL);
+export let socket: Socket = io(websocketServerURL);
 
 
 function isImageFile(file: File | undefined) {
@@ -20,7 +20,7 @@ export function connect(chatroomId: string, senderId: string) {
     if (socket) {
         socket.disconnect();
     }
-    
+
     // connect to the new connection
     socket = io(websocketServerURL, {
         extraHeaders: {

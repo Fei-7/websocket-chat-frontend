@@ -45,6 +45,10 @@ export default function ChatCardList({ studentId }: Props) {
 
     }, [])
 
+    socket.on("online users update", (onlineUsers) => {
+        console.log("PING", onlineUsers)
+    })
+
     return (
         <>
             {loading ? (
