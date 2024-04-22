@@ -51,6 +51,7 @@ export default function ChatCardList({ studentId }: Props) {
 
     if (firstLoad) {
         console.log("first load");
+        socket.removeAllListeners("online users update");
         socket.on("online users update", (onlineUsers) => {
             // console.log("PING", onlineUsers)
             // TODO: Separate online and offline users

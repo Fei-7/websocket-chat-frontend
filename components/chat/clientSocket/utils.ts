@@ -1,4 +1,4 @@
-import { Message, MessagesGroupByDate } from "@/actions/chat/getMessageByChatRoom";
+import { Message, MessagesGroupByDate } from "@/types/chat";
 import { toClientMessage } from "@/types/chat";
 import { Dispatch, SetStateAction } from "react";
 
