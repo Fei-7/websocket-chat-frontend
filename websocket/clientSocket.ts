@@ -5,7 +5,7 @@ import { Socket, io } from "socket.io-client";
 const websocketServerURL = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:3001";
 
 let curChatroomId: string;
-let socket: Socket = io(websocketServerURL);
+export let socket: Socket = io(websocketServerURL);
 
 
 function isImageFile(file: File | undefined) {
