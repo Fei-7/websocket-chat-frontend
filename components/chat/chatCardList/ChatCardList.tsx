@@ -7,7 +7,7 @@ import { ChatListData } from "@/lib/chatInterface"
 import ChatCardLoading from "./ChatCardLoading"
 import SearchNotFound from "@/components/loadingAndError/SearchNotFound"
 import axios from "axios"
-import { socket } from "@/websocket/clientSocket"
+import { socket, connect } from "@/websocket/clientSocket"
 
 type Props = {
     studentId: string
@@ -20,7 +20,6 @@ export default function ChatCardList({ studentId }: Props) {
     const [offlineUsers, setOfflineUsers] = useState<ChatListData[]>([])
 
     useEffect(() => {
-        // TODO: filter ตัวเองออก
         async function getChatList() {
             try {
                 const res = await axios.get('http://localhost:3001/api/privateChat', {
@@ -30,6 +29,7 @@ export default function ChatCardList({ studentId }: Props) {
                     withCredentials: true
                 })
                 const me_id = me.data.data.id
+                connect("", me_id)
                 setUsers(res.data.data.filter((user: { id: any }) => user.id !== me_id));
 
             } catch (err) {
@@ -56,6 +56,7 @@ export default function ChatCardList({ studentId }: Props) {
                     <ChatCardLoading key={index} />
                 ))
             ) : users.length ? (
+
                 users.map((user, index) => <ChatCard key={index} user={user} />)
             ) : (
                 <div className="col-span-full">
