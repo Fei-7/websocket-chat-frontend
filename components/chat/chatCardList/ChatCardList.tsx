@@ -7,6 +7,7 @@ import { ChatListData } from "@/lib/chatInterface"
 import ChatCardLoading from "./ChatCardLoading"
 import SearchNotFound from "@/components/loadingAndError/SearchNotFound"
 import axios from "axios"
+import { socket } from "@/websocket/clientSocket"
 
 type Props = {
     studentId: string
@@ -15,15 +16,22 @@ type Props = {
 export default function ChatCardList({ studentId }: Props) {
     const [users, setUsers] = useState<ChatListData[]>([])
     const [loading, setLoading] = useState<boolean>(true);
+    const [onlineUsers, setOnlineUsers] = useState<ChatListData[]>([])
+    const [offlineUsers, setOfflineUsers] = useState<ChatListData[]>([])
 
     useEffect(() => {
         // TODO: filter ตัวเองออก
         async function getChatList() {
             try {
-                const res = await axios.get('http://localhost:3001/api/privateChat', { 
-                    withCredentials: true 
+                const res = await axios.get('http://localhost:3001/api/privateChat', {
+                    withCredentials: true
                 })
-                setUsers(res.data.data);
+                const me = await axios.get('http://localhost:3001/api/auth/me', {
+                    withCredentials: true
+                })
+                const me_id = me.data.data.id
+                setUsers(res.data.data.filter((user: { id: any }) => user.id !== me_id));
+
             } catch (err) {
                 console.log("Error setEmployer: ", err)
                 return;
