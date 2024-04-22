@@ -24,8 +24,8 @@ export function connect(chatroomId: string, userId: string) {
     // connect to the new connection
     socket = io(websocketServerURL, {
         extraHeaders: {
-            "chat-room-id": chatroomId,
-            "user-id": userId
+            "chatRoomId": chatroomId,
+            "userId": userId
         }
     });
 
