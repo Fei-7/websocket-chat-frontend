@@ -7,7 +7,7 @@ import { ChatListData } from "@/lib/chatInterface"
 import ChatCardLoading from "./ChatCardLoading"
 import SearchNotFound from "@/components/loadingAndError/SearchNotFound"
 import axios from "axios"
-import { socket, connect } from "@/websocket/clientSocket"
+import { connect, socket } from "@/websocket/clientSocket"
 
 type Props = {
     studentId: string
@@ -31,6 +31,7 @@ export default function ChatCardList({ studentId }: Props) {
                 const me_id = me.data.data.id
                 connect("", me_id)
                 setUsers(res.data.data.filter((user: { id: any }) => user.id !== me_id));
+                connect("", me_id);
 
             } catch (err) {
                 console.log("Error setEmployer: ", err)
@@ -39,12 +40,12 @@ export default function ChatCardList({ studentId }: Props) {
                 setLoading(false)
             }
         }
-
+        
         getChatList();
         // console.log("New state: ", chatListReloadState)
-
-    }, [])
-
+        
+    }, []);
+    
     socket.on("online users update", (onlineUsers) => {
         console.log("PING", onlineUsers)
     })

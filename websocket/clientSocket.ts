@@ -20,14 +20,20 @@ export function connect(chatroomId: string, userId: string) {
     if (socket) {
         socket.disconnect();
     }
-    
+    // console.log(chatroomId, userId);
     // connect to the new connection
     socket = io(websocketServerURL, {
+        transports: ['websocket'],
         extraHeaders: {
             "chatRoomId": chatroomId,
-            "userId": userId
+            "user-id": userId
         }
     });
+
+    socket.emit("new connection", {
+        userId: userId,
+        chatroomId: chatroomId
+    })
 
     // remember current chatroomId
     curChatroomId = chatroomId;
