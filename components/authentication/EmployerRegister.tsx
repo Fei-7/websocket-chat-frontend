@@ -1,7 +1,7 @@
 import Title from "./Title"
 import LoginViaGoogle from "./LoginViaGoogle"
 import Line from "./Line"
-import RegisterViaEmail from "./RegisterViaEmail"
+import RegisterViaEmail from "./RegisterViaUsername"
 import { useEffect, useState } from "react"
 import { Session } from "next-auth"
 

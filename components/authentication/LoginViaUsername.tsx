@@ -2,27 +2,28 @@ import Link from "next/link"
 import Input from "./Input"
 import PasswordInput from "./PasswordInput"
 import { useState } from "react"
-import { signIn } from "next-auth/react"
+// import { signIn } from "next-auth/react"
 import PrimaryButton from "../public/buttons/primaryButton/PrimaryButton"
+import { redirect } from "next/navigation"
 
 type Error = {
-  email: string
+  username: string
   password: string
 }
 
 type Form = {
-  email: string
+  username: string
   password: string
 }
 
 export default function LoginViaEmail() {
   const [form, setForm] = useState<Form>({
-    email: "",
+    username: "",
     password: "",
   })
 
   const [errors, setErrors] = useState<Error>({
-    email: "",
+    username: "",
     password: "",
   })
   const [isDisabled, setDisabled] = useState(false);
@@ -36,33 +37,25 @@ export default function LoginViaEmail() {
   }
 
   const validateForm = () => {
-    const email_pattern = /^[^\s@]+@[^\s@]+\.[^\s@]{2,6}$/
-    // const password_pattern = /^.{8}$/
     let success = true
     const errors: Error = {
-      email: "",
+      username: "",
       password: "",
     }
-    if (form.email === "") {
-      errors.email = "กรอกที่อยู่อีเมลของคุณ"
+    if (form.username === "") {
+      errors.username = "กรอกที่อยู่อีเมลของคุณ"
       success = false
-    } else if (!email_pattern.test(form.email)) {
-      errors.email = "อีเมลไม่ถูกต้อง"
-      success = false
-    }
+    } 
 
     if (form.password === "") {
       errors.password = "กรอกรหัสผ่านของคุณ"
-      success = false
-    } else if (form.password.length < 8) {
-      errors.password = "รหัสผ่านไม่ถูกต้อง"
       success = false
     }
 
     return { errors, success }
   }
 
-  const handleValidation = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleValidation = async (event: React.FormEvent<HTMLFormElement>) => {
     setPrimaryLoading((prev) => !prev);
     setDisabled(true);
 
@@ -75,12 +68,40 @@ export default function LoginViaEmail() {
         setDisabled(false);
       }, 2000);
       return
-    } else {
-      signIn("credentials", {
-        email: form.email,
-        password: form.password,
-        callbackUrl: "/chat",
-      })
+    } 
+
+    /**
+     * fetch login here
+     */
+    const endPointURL = (process.env.NEXT_PUBLIC_BACKEND_URL || 'localhost:3001') + "/api/auth/login";
+
+    try {
+      const response = await fetch(endPointURL, {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          username: form.username,
+          password: form.password
+        })
+      });
+
+      console.log(response);
+
+      if (response.status === 200) {
+        // redirect('/chat');
+        /**
+         * client redirect to /chat
+         */
+      } else {
+        setPrimaryLoading((prev) => !prev);
+        setDisabled(false);
+      }
+    } catch (err) {
+      console.log(err);
+      setPrimaryLoading((prev) => !prev);
+      setDisabled(false);
     }
   }
 
@@ -88,17 +109,17 @@ export default function LoginViaEmail() {
     <form className="mt-[10px] w-full" onSubmit={handleValidation} noValidate>
       {/* Email Input Component */}
       <Input
-        name="email"
-        label="อีเมล"
-        inputType="email"
-        warning={errors.email}
+        name="username"
+        label="ชื่อผู้ใช้"
+        inputType="text"
+        warning={errors.username}
         handleChange={handleChange}
-        value={form.email}
+        value={form.username}
       />
 
       {/* Password Input Component */}
       <PasswordInput
-        fromLoginPage={true}
+        fromLoginPage={false}
         handleChange={handleChange}
         value={form.password}
         warning={errors.password}

@@ -1,8 +1,6 @@
 "use client";
 import Title from "./Title";
-import LoginViaGoogle from "./LoginViaGoogle";
-import Line from "./Line";
-import LoginViaEmail from "./LoginViaEmail";
+import LoginViaUsername from "./LoginViaUsername";
 
 export default function Login() {
   return (
@@ -15,7 +13,7 @@ export default function Login() {
       </div> */}
 
       {/* Login via Email Component */}
-      <LoginViaEmail />
+      <LoginViaUsername />
     </div>
   );
 }

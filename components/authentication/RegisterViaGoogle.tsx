@@ -2,10 +2,8 @@ import Input from "./Input"
 import Link from "next/link"
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
-import { signIn } from "next-auth/react"
 import Image from "next/image"
-import { updateName } from "@/actions/register/register"
-import { RegisterProps } from "./RegisterViaEmail"
+import { RegisterProps } from "./RegisterViaUsername"
 
 type Form = {
   fname: string
@@ -14,12 +12,15 @@ type Form = {
 
 const defaultForm = { fname: "", lname: "" }
 
+type props = {
+  handleToggleForm: () => void
+  isToggleForm: boolean
+}
+
 export default function RegisterViaGoogle({
   handleToggleForm,
-  isToggleForm,
-  session,
-  updateSession,
-}: RegisterProps) {
+  isToggleForm
+}: props) {
   const [data, setForm] = useState<Form>(structuredClone(defaultForm))
 
   const [checkBoxError, setCheckBoxError] = useState({
@@ -52,32 +53,7 @@ export default function RegisterViaGoogle({
       setErrors(errors)
       return
     }
-
-    if (session?.user) {
-      await Promise.all([
-        updateName(session.user.email, data.fname, data.lname),
-        updateSession({
-          user: {
-            firstname: data.fname,
-            lastname: data.lname,
-            hashedPassword: "completed",
-          },
-        }),
-      ])
-
-      router.push("/landing")
-      return
-    }
   }
-  useEffect(() => {
-    if (session?.user) {
-      setForm({
-        ...data,
-        fname: session.user.salutation + " " + session.user.firstname,
-        lname: session.user.middlename + " " + session.user.lastname,
-      })
-    }
-  }, [session])
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setForm({
@@ -102,10 +78,8 @@ export default function RegisterViaGoogle({
         <div className="text-[#64748B] leading-6 text-sm w-full mt-[25px]">
           <button
             className="w-full h-[40px] bg-[#F1F5F9] border border-[#CBD5E1] rounded-md flex items-center px-[20px]"
-            onClick={() =>
-              signIn("google", {
-                callbackUrl: "/register",
-              })
+            onClick={() =>{}
+              
             }>
             <div>
               <Image src={"/logos/google-logo.svg"} width={20} height={20} alt="google logo" />
@@ -193,18 +167,11 @@ export default function RegisterViaGoogle({
               </div>
             )}
 
-            {!session?.user && (
-              <div id="previousPage" className="flex justify-center">
-                <p
-                  onClick={handleToggleForm}
-                  className="hover:underline hover:underline-offset text-[#334155] hover:text-slate-600 text-md cursor-pointer">
-                  ย้อนกลับ
-                </p>
-              </div>
-            )}
+            
           </div>
         </form>
       )}
     </div>
   )
 }
+
