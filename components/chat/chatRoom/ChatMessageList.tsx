@@ -20,7 +20,7 @@ export default function ChatMessageList({ chatroomId, chatRoomInfo, senderId }: 
     // console.log("toDispatch = ", toDispatch);
     const [messagesByDate, setMessagesByDate] = useState<MessagesGroupByDate[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
-
+    let id = chatRoomInfo?.isGroup ? chatroomId : chatRoomInfo.users[0].id === senderId ? chatRoomInfo.users[1].id : chatRoomInfo.users[0].id
     // const chatListReloadState = useAppSelector((state) => state.chatList.chatListReloadState);
 
     useEffect(() => {
@@ -34,13 +34,12 @@ export default function ChatMessageList({ chatroomId, chatRoomInfo, senderId }: 
     useEffect(() => {
         async function getInitialData() {
             try {
-                const id = chatRoomInfo?.isGroup ? chatroomId : chatRoomInfo.users[0].id === senderId ? chatRoomInfo.users[1].id : chatRoomInfo.users[0].id
+                if (!id) return;
                 const res = await axios.get(`http://localhost:3001/api/${chatRoomInfo?.isGroup ? "groupChat" : "privateChat"}/` + id + '/messages', {
                     withCredentials: true
                 })
                 setMessagesByDate(res.data.data);
                 setIsLoading(false)
-
             } catch (err) {
                 console.log(err)
                 return;
@@ -49,7 +48,7 @@ export default function ChatMessageList({ chatroomId, chatRoomInfo, senderId }: 
 
         getInitialData();
 
-    }, [])
+    }, [id])
 
     useEffect(() => {
         const handleResize = () => {
