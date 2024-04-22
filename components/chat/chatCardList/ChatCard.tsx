@@ -30,7 +30,9 @@ export default function ChatCard({ user }: Props) {
     // }
     const handleOnClick = async () => {
         try {
-            const chatInfo = await axios.get('http://localhost:3001/api/privateChat/' + user.id)
+            const chatInfo = await axios.get('http://localhost:3001/api/privateChat/' + user.id, {
+                withCredentials: true
+            });
             console.log(chatInfo.data)
             // router.push(`/chat/${chatInfo._id}`);
         } catch (err) {

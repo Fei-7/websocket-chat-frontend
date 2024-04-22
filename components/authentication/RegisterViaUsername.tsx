@@ -5,6 +5,8 @@ import { useState } from "react"
 // import { signIn } from "next-auth/react"
 import PrimaryButton from "../public/buttons/primaryButton/PrimaryButton"
 import { redirect } from "next/navigation"
+import { useRouter } from "next/navigation";
+import { Router } from "next/router"
 
 type Error = {
   username: string
@@ -17,6 +19,8 @@ type Form = {
 }
 
 export default function RegisterViaUsername() {
+  const router = useRouter();
+
   const [form, setForm] = useState<Form>({
     username: "",
     password: "",
@@ -81,6 +85,7 @@ export default function RegisterViaUsername() {
         headers: {
           'Content-Type': 'application/json'
         },
+        credentials: 'include',
         body: JSON.stringify({
           username: form.username,
           password: form.password
@@ -94,6 +99,8 @@ export default function RegisterViaUsername() {
         /**
          * client redirect to /chat
          */
+
+        router.push("/chat");
       } else {
         setPrimaryLoading((prev) => !prev);
         setDisabled(false);

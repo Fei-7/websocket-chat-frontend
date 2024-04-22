@@ -20,7 +20,9 @@ export default function ChatCardList({ studentId }: Props) {
         // TODO: filter ตัวเองออก
         async function getChatList() {
             try {
-                const res = await axios.get('http://localhost:3001/api/privateChat')
+                const res = await axios.get('http://localhost:3001/api/privateChat', { 
+                    withCredentials: true 
+                })
                 setUsers(res.data.data);
             } catch (err) {
                 console.log("Error setEmployer: ", err)
