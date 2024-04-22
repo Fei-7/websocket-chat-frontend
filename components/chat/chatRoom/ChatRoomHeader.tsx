@@ -31,7 +31,7 @@ export default function ChatRoomHeader({ isStudent, chatRoomInfo, sender }: Prop
                     height={24}
                 />
             </Link>
-            {sender ? (
+            {chatRoomInfo.users[0].username ? (
                 <div className="flex flex-col justify-between gap-1">
                     <div
                         className="font-medium text-[20px] text-slate-800 truncate-[30ch] line-clamp-1 cursor-pointer hover:underline"
@@ -42,7 +42,7 @@ export default function ChatRoomHeader({ isStudent, chatRoomInfo, sender }: Prop
             ) : (
                 <div className="animate-pulse w-full flex flex-col justify-between gap-1">
                     <div className="min-h-[30px] bg-slate-200 rounded"></div>
-                    <div className="min-h-[21px] bg-slate-200 rounded"></div>
+                    {/* <div className="min-h-[21px] bg-slate-200 rounded"></div> */}
                 </div>
             )}
 
