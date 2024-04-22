@@ -13,6 +13,8 @@ type Props = {
     studentId: string
 }
 
+let firstLoad = true;
+
 export default function ChatCardList({ studentId }: Props) {
     const [users, setUsers] = useState<ChatListData[]>([])
     const [loading, setLoading] = useState<boolean>(true);
@@ -29,10 +31,11 @@ export default function ChatCardList({ studentId }: Props) {
                     withCredentials: true
                 })
                 const me_id = me.data.data.id
+                console.log("USing effect");
                 connect("", me_id)
                 setUsers(res.data.data.filter((user: { id: any }) => user.id !== me_id));
-                connect("", me_id);
 
+                
             } catch (err) {
                 console.log("Error setEmployer: ", err)
                 return;
@@ -46,9 +49,13 @@ export default function ChatCardList({ studentId }: Props) {
         
     }, []);
     
-    socket.on("online users update", (onlineUsers) => {
-        console.log("PING", onlineUsers)
-    })
+    if (firstLoad) {
+        console.log("first load");
+        socket.on("online users update", (onlineUsers) => {
+            console.log("PING", onlineUsers)
+        });
+        firstLoad = false;
+    }
 
     return (
         <>

@@ -16,20 +16,7 @@ export function connect(chatroomId: string, userId: string) {
     // won't connect again if chatroomId doesn't change to prevent bugs
     if (chatroomId === curChatroomId) return;
 
-    // disconnect from the old connection
-    if (socket) {
-        socket.disconnect();
-    }
-    // console.log(chatroomId, userId);
-    // connect to the new connection
-    socket = io(websocketServerURL, {
-        transports: ['websocket'],
-        extraHeaders: {
-            "chatRoomId": chatroomId,
-            "user-id": userId
-        }
-    });
-
+    
     socket.emit("new connection", {
         userId: userId,
         chatroomId: chatroomId
