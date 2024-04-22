@@ -16,6 +16,9 @@ export function connect(chatroomId: string, userId: string) {
     // won't connect again if chatroomId doesn't change to prevent bugs
     if (chatroomId === curChatroomId) return;
 
+    socket.disconnect();
+
+    socket.connect();
     
     socket.emit("new connection", {
         userId: userId,

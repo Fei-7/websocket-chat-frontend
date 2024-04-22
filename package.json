@@ -11,6 +11,7 @@
   "dependencies": {
     "@reduxjs/toolkit": "^2.2.3",
     "axios": "^1.6.8",
+    "bufferutil": "^4.0.8",
     "clsx": "^2.1.0",
     "html-to-image": "^1.11.11",
     "next": "14.2.2",
@@ -18,7 +19,9 @@
     "react-dom": "^18",
     "react-redux": "^9.1.1",
     "socket.io-client": "^4.7.5",
-    "tailwind-merge": "^2.3.0"
+    "tailwind-merge": "^2.3.0",
+    "utf-8-validate": "^5.0.10",
+    "ws": "^8.16.0"
   },
   "devDependencies": {
     "@types/node": "^20",
