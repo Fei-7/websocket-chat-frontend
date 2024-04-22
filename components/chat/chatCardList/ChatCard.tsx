@@ -47,7 +47,7 @@ export default function ChatCard({ user, id }: Props) {
 
     return (
         <div
-            className={`hover:bg-neutral-100 flex flex-row items-center h-[90px] px-[16px] py-[21px] rounded-[16px] hover:cursor-pointer lg:h-[94px] lg:py-[20px]`}
+            className={`hover:bg-neutral-200 flex flex-row items-center h-[90px] px-[16px] py-[21px] rounded-[16px] hover:cursor-pointer lg:h-[94px] lg:py-[20px]`}
             onClick={handleOnClick}
         >
             <Image
