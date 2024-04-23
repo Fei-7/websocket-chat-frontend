@@ -3,7 +3,9 @@
 import ChatCardListStudent from "./chatCardList/ChatCardList";
 // import getIsStudent from "@/actions/authentication/getIsStudent";
 // import getUserId from "@/actions/authentication/getUserId";
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
+import GroupCardList from "./chatCardList/GroupCardList";
+import ChatCardList from "./chatCardList/ChatCardList";
 
 type Props = {
     children: React.ReactNode,
@@ -12,42 +14,57 @@ type Props = {
 }
 
 export default function DesktopChatPage({ children, isStudent, userId }: Props) {
-    // let userId = null
-    // let isStudent = null
+    const [isGroupPage, setIsGroupPage] = useState(false)
 
-    // useEffect(() => {
-    //     async function getInitialUserData() {
-    //         try {
-    //             userId = await getUserId();
-    //             isStudent = await getIsStudent();
-    //         } catch (err) {
-    //             console.log(err)
-    //             return;
-    //         }
-    //     }
+    const handleGroupPage = () => {
+        setIsGroupPage(true)
+    }
 
-    //     getInitialUserData();
-
-    // }, [])
+    const handlePrivatePage = () => {
+        setIsGroupPage(false)
+    }
 
     return (
         <div className="rounded-3xl bg-slate-50 min-h-[80vh] p-5">
-            {/* TODO : Container */}
             <div className="flex gap-4">
-                {isStudent !== null ? (
-                    // TODO : Desktop Student Chat list
-                    userId !== null && (
-                        <div className="hidden lg:block min-w-[430px] w-[30vw] max-h-[80vh] overflow-y-auto">
-                            <ChatCardListStudent studentId={userId} />
-                        </div >
-                    )
-                ) : (
-                    <div>กำลังดาวน์โหลด</div>
-                )
-                }
-                {/* TODO : Container of Chat room (chat/page.tsx & [userId]/page.tsx) */}
+                <div className="flex flex-col lg:min-w-[430px] w-[30vw]">
+                    <div className="mx-4 mb-2">
+                        <div className="w-full bg-[#CBD5E1] h-[50px] rounded-md p-[6px] flex items-center mb-2">
+                            <button
+                                // style={{ backgroundColor: isGroupPage ? "#CBD5E" : "white" }}
+                                className={`w-1/2 h-full flex items-center justify-center rounded-md ${isGroupPage ? "bg-[#CBD5E]" : "bg-white"}`}
+                                onClick={handlePrivatePage}>
+                                <p className="text-sm">แชทส่วนตัว</p>
+                            </button>
+                            <button
+                                // style={{ backgroundColor: isGroupPage ? "white" : "#CBD5E" }}
+                                className={`w-1/2 h-full flex items-center justify-center rounded-md ${isGroupPage ? "bg-white" : "bg-[#CBD5E]"}`}
+                                onClick={handleGroupPage}>
+                                <p className="text-sm">แชทกลุ่ม</p>
+                            </button>
+                        </div>
+                    </div>
+                    {/* TODO : Container */}
+
+                    {
+                        // TODO : Desktop Student Chat list
+                        userId !== null && (
+                            <div className="hidden lg:block min-w-[430px] w-[30vw] max-h-[80vh] overflow-y-auto">
+                                {isGroupPage ? (
+                                    <GroupCardList studentId={userId} />
+                                ) : (
+                                    <ChatCardList studentId={userId} />
+                                )}
+                            </div>
+                        )
+                    }
+                    {/* TODO : Container of Chat room (chat/page.tsx & [userId]/page.tsx) */}
+                </div>
                 <div className="w-full">{children}</div>
-            </div>
+            </div >
+
+
         </div>
+
     )
 }

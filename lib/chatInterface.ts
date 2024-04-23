@@ -17,21 +17,10 @@ export interface ChatListData {
     username: string;
 }
 
-export interface EmployerChatListData {
-    jobId: string;
-    jobTitle: string;
-    chatrooms: {
-        chatroomId: string;
-        latestMessage: Message | null;
-        student: {
-            profileImageUrl: string | null;
-            studentId: string;
-            salutation: string;
-            firstname: string;
-            middlename: string | null;
-            lastname: string;
-        };
-    }[];
+export interface GroupListData {
+    id: true;
+    name: true;
+    userIds: string[];
 }
 
 export interface ChatRoomInfo {

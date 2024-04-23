@@ -1,6 +1,6 @@
 "use client"
 
-import { ChatListData } from "@/lib/chatInterface"
+import { ChatListData, GroupListData } from "@/lib/chatInterface"
 import Image from "next/image"
 import noavatar from "@/public/icons/noavatar.svg";
 import Link from "next/link";
@@ -11,12 +11,12 @@ import { connect } from "@/websocket/clientSocket"
 import backEndUrl from "@/lib/backendURL";
 
 type Props = {
-    user: ChatListData;
-    id: string
+    user?: ChatListData;
+    id: string;
+    group?: GroupListData;
 }
 
-export default function ChatCard({ user, id }: Props) {
-    const pathName = usePathname();
+export default function ChatCard({ user, id, group }: Props) {
     // const isChatRoom = pathName.endsWith(user.chatrooms[0].chatroomId)
     const avatar = noavatar;
     const router = useRouter();
@@ -34,13 +34,23 @@ export default function ChatCard({ user, id }: Props) {
     const handleOnClick = async () => {
         try {
             if (!id) console.log("NO ID JAAA")
-            const chatInfo = await axios.get(backEndUrl + '/api/privateChat/' + user.id, {
-                withCredentials: true
-            });
-            const chatRoomId = chatInfo.data.data.id
+            let chatInfo = null
+            if (user && !group) {
+                chatInfo = await axios.get(backEndUrl + '/api/privateChat/' + user.id, {
+                    withCredentials: true
+                });
+            } else if (!user && group) {
+                chatInfo = await axios.get(backEndUrl + '/api/privateChat/' + group.id, {
+                    withCredentials: true
+                });
+            } else {
+                return;
+            }
+            const chatRoomId = chatInfo?.data.data.id
             // console.log(chatInfo.data)
             // connect(chatRoomId, id)
             router.push(`/chat/${chatRoomId}`);
+
         } catch (err) {
             console.log('Error getChatInfo: ', err)
         }
@@ -74,7 +84,7 @@ export default function ChatCard({ user, id }: Props) {
             <div className="flex flex-col w-full gap-1">
                 <div className="flex flex-row justify-between w-full items-center lg:text-[18px]">
                     <div className="font-medium text-[16px] text-slate-800 truncate max-w-[24ch] lg:max-w-[27ch]">
-                        {user.username}
+                        {user ? user.username : group ? group.name + " (" + group.userIds.length + ")" : "กำลังดาวน์โหลด"}
                     </div>
                     {/* <div className="text-[14px] text-[#838383] lg:text-[16px]">
                         {formattedDate()}
