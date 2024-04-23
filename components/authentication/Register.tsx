@@ -1,7 +1,5 @@
 "use client"
-import EmployerRegister from "./EmployerRegister"
 import StudentRegister from "./StudentRegister"
-import { useEffect, useState } from "react"
 
 export default function Register() {
   
