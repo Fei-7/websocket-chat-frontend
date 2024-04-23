@@ -42,7 +42,7 @@ export default function ChatCardList({ studentId }: Props) {
                     // console.log("online users = ", onlineUsers);
                     setOnlineUsers(onlineUsers.filter((user: { id: any }) => user.id !== me_id));
                 })
-                connect("", me_id);
+                // connect("", me_id);
             } catch (err) {
                 console.log("Error setEmployer: ", err)
                 return;
