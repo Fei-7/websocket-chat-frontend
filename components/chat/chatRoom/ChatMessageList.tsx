@@ -52,7 +52,7 @@ export default function ChatMessageList({ chatroomId, chatRoomInfo, senderId }: 
                     withCredentials: true
                 })
 
-                // for (let i=0;i<res.data.data.length)
+                console.log(res.data.data);
 
                 setMessagesByDate(res.data.data);
                 setIsLoading(false)

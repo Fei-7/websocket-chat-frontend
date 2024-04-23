@@ -1,6 +1,6 @@
 "use client"
 
-import { Message } from "@/lib/chatInterface"
+import { Message } from "@/types/chat"
 import Image from "next/image"
 import { useState } from "react"
 import close from "@/public/icons/close.svg"
@@ -12,7 +12,7 @@ type Props = {
 }
 
 export default function ChatMessage({ message, senderId }: Props) {
-    const { id, userId, createdAt, content, isImage } = message
+    const { id, userId, username, createdAt, content, isImage } = message
     const isSender = senderId === userId
     const newCreatedAt = new Date(createdAt)
     const hours = newCreatedAt.getHours().toString().padStart(2, "0")
@@ -48,7 +48,7 @@ export default function ChatMessage({ message, senderId }: Props) {
             <div className={`w-full flex flex-col`}>
                 {!isSender && (
                     <div className="font-medium text-[14px] text-slate-700 mb-1">
-                        Waiting for api that pass userID and return userName
+                        {username}
                     </div>
                 )}
                 <div>

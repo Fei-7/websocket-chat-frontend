@@ -24,6 +24,7 @@ export function constructIncommingMessageHandler(
             const newMessage: Message = {
                 id: message.id,
                 userId: message.userId,
+                username: message.username,
                 createdAt: newMessageDate,
                 content: message.content,
                 isImage: message.isImage
