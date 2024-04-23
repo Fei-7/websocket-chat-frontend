@@ -29,7 +29,7 @@ export default function ChatMessageList({ chatroomId, chatRoomInfo, senderId }: 
         // if (firstLoad || curChatRoomId !== chatroomId) {
         const incommingMessageHandler = constructIncommingMessageHandler(setMessagesByDate/*, dispatch, toggleChatListReload*/);
         setIncommingMessageHandler(incommingMessageHandler);
-        console.log("SEETING");
+        // console.log("SEETING");
         firstLoad = false;
         curChatRoomId = chatroomId;
         // }

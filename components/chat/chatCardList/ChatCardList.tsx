@@ -26,10 +26,10 @@ export default function ChatCardList({ studentId }: Props) {
     useEffect(() => {
         async function getChatList() {
             try {
-                const res = await axios.get(backEndURL+'/api/privateChat', {
+                const res = await axios.get(backEndURL + '/api/privateChat', {
                     withCredentials: true
                 })
-                const me = await axios.get(backEndURL+'/api/auth/me', {
+                const me = await axios.get(backEndURL + '/api/auth/me', {
                     withCredentials: true
                 })
                 const me_id = me.data.data.id
@@ -48,19 +48,40 @@ export default function ChatCardList({ studentId }: Props) {
         }
 
         getChatList();
-        // console.log("New state: ", chatListReloadState)
+        // console.log("New state: ", chatListReloadState
 
     }, []);
 
+    useEffect(() => {
+        if (!onlineUsers) return
+        // const online = onlineUsers.filter((user: { id: any }) => user.id !== id)
+        // // console.log("ID: ", id)
+        // setOnlineUsers(online)
+        // console.log("Users: ", users)
+        const offline = users.filter((user: { id: any }) => !onlineUsers.map((online: { id: any }) => online.id).includes(user.id));
+        setOfflineUsers(offline)
+        console.log("YES: ", offline)
+    }, [onlineUsers])
+
     if (firstLoad) {
-        console.log("first load");
+        // console.log("first load");
         socket.removeAllListeners("online users update");
         socket.on("online users update", (onlineUsers) => {
-            // console.log("PING", onlineUsers)
+            // console.log("PINGY", onlineUsers)
             // TODO: Separate online and offline users
+            // const online = onlineUsers.filter((user: { id: any }) => user.id !== id)
+            // console.log("ID: ", id)
+            setOnlineUsers(onlineUsers)
+            console.log(onlineUsers)
+            // console.log("Users: ", users)
+            // const offline = users.filter((user: { id: any }) => !onlineUsers.map((online: { id: any }) => online.id).includes(user.id));
+            // setOfflineUsers(offline)
+            // console.log("on: ", online, "off: ", offline)
         });
         firstLoad = false;
     }
+    console.log("ONLINE: ", onlineUsers)
+    console.log("OFFLINE: ", offlineUsers)
 
     return (
         <>
