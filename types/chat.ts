@@ -28,8 +28,12 @@ export type Message = {
     content: string;
     isImage: boolean;
 }
-  
+
 export type MessagesGroupByDate = {
     Date: string;
     Messages: Message[];
+}
+
+export type reqBody = {
+    name: string;
 }

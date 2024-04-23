@@ -5,6 +5,7 @@ import ChatCardList from "./chatCardList/ChatCardList";// import getIsStudent fr
 import { useEffect, useState } from "react"
 import GroupCardList from "./chatCardList/GroupCardList";
 import PrimaryButton from "../buttons/primaryButton/PrimaryButton";
+import CreateChatRoomModal from "./modal/CreateChatRoomModal";
 
 type Props = {
     isStudent: boolean,
@@ -14,6 +15,7 @@ type Props = {
 export default function MobileChatPage({ isStudent, userId }: Props) {
     const [isGroupPage, setIsGroupPage] = useState(false)
     const [primaryLoading, setPrimaryLoading] = useState(false);
+    const [showModal, setShowModal] = useState<boolean>(false);
 
     const handleGroupPage = () => {
         setIsGroupPage(true)
@@ -24,7 +26,7 @@ export default function MobileChatPage({ isStudent, userId }: Props) {
     }
 
     const handleOpenCreateChatRoomModal = async () => {
-
+        setShowModal(true)
     }
 
     return (
@@ -48,7 +50,7 @@ export default function MobileChatPage({ isStudent, userId }: Props) {
                         </div>
                     </div>
                     {isGroupPage && (
-                        <div className="mx-8 mb-3 mt-2">
+                        <div className="mx-4 mb-3 mt-2">
                             <PrimaryButton
                                 type="submit"
                                 className="w-full"
@@ -75,6 +77,11 @@ export default function MobileChatPage({ isStudent, userId }: Props) {
                         )}
                 </div>
             </div>
+            {showModal ? (
+                <CreateChatRoomModal
+                    setShowModal={setShowModal}
+                />
+            ) : null}
         </>
     )
 }
