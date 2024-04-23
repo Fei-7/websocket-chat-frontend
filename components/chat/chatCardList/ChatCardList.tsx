@@ -1,5 +1,4 @@
 "use client"
-
 import ChatCard from "./ChatCard"
 // import { getStudentChatListData } from "@/actions/chat/getChatListDataByUser"
 import { useEffect, useState } from "react"
@@ -7,7 +6,7 @@ import { ChatListData } from "@/lib/chatInterface"
 import ChatCardLoading from "./ChatCardLoading"
 import SearchNotFound from "@/components/loadingAndError/SearchNotFound"
 import axios from "axios"
-import { connect, socket } from "@/websocket/clientSocket"
+import { connect, setOn, socket } from "@/websocket/clientSocket"
 import backEndURL from '@/lib/backendURL';
 
 type Props = {
@@ -39,13 +38,21 @@ export default function ChatCardList({ studentId }: Props) {
                 }
                 setUsers(res.data.data.filter((user: { id: any }) => user.id !== me_id));
                 setId(me_id)
+                setOn("online users update", (onlineUsers: ChatListData[]) => {
+                    console.log("online users = ", onlineUsers);
+                    setOnlineUsers(onlineUsers);
+                })
+                connect("", me_id);
             } catch (err) {
                 console.log("Error setEmployer: ", err)
                 return;
             } finally {
+                socket.emit("get online users");
                 setLoading(false)
             }
         }
+
+        console.log(socket.id, socket.listeners('online users update'));
 
         getChatList();
         // console.log("New state: ", chatListReloadState
@@ -63,23 +70,23 @@ export default function ChatCardList({ studentId }: Props) {
         console.log("YES: ", offline)
     }, [onlineUsers])
 
-    if (firstLoad) {
-        // console.log("first load");
-        socket.removeAllListeners("online users update");
-        socket.on("online users update", (onlineUsers) => {
-            // console.log("PINGY", onlineUsers)
-            // TODO: Separate online and offline users
-            // const online = onlineUsers.filter((user: { id: any }) => user.id !== id)
-            // console.log("ID: ", id)
-            setOnlineUsers(onlineUsers)
-            console.log(onlineUsers)
-            // console.log("Users: ", users)
-            // const offline = users.filter((user: { id: any }) => !onlineUsers.map((online: { id: any }) => online.id).includes(user.id));
-            // setOfflineUsers(offline)
-            // console.log("on: ", online, "off: ", offline)
-        });
-        firstLoad = false;
-    }
+    // if (firstLoad) {
+    //     // console.log("first load");
+    //     socket.removeAllListeners("online users update");
+    //     socket.on("online users update", (onlineUsers) => {
+    //         // console.log("PINGY", onlineUsers)
+    //         // TODO: Separate online and offline users
+    //         // const online = onlineUsers.filter((user: { id: any }) => user.id !== id)
+    //         // console.log("ID: ", id)
+    //         setOnlineUsers(onlineUsers)
+    //         console.log(onlineUsers)
+    //         // console.log("Users: ", users)
+    //         // const offline = users.filter((user: { id: any }) => !onlineUsers.map((online: { id: any }) => online.id).includes(user.id));
+    //         // setOfflineUsers(offline)
+    //         // console.log("on: ", online, "off: ", offline)
+    //     });
+    //     firstLoad = false;
+    // }
     console.log("ONLINE: ", onlineUsers)
     console.log("OFFLINE: ", offlineUsers)
 

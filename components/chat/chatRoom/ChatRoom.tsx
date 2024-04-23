@@ -49,7 +49,7 @@ export default function ChatRoom({ chatroomId, sender }: Props) {
     // connect to websocket with specific chatroomId and senderId
     // put it here to make sure that setIncommingMessageHandler is called after socket connection is called
     // put it here because useEffect triggers in child components before parent component
-    connect(chatroomId, sender.id);
+    // connect(chatroomId, sender.id);
     // const isStudent = false
     return (
         <div className="h-[100dvh] w-full flex flex-col bg-neutral-100 border border-[#CBD5E1] lg:h-[80vh]">

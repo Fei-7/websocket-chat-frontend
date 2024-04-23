@@ -80,5 +80,12 @@ export function setIncommingMessageHandler(inComingMessageHandler: any) {
     socket.on('chat image message', inComingMessageHandler);
     socket.on('chat text message', inComingMessageHandler);
 
-    console.log(socket.listeners('chat text message'));
+    console.log("", socket.id, socket.listeners('chat text message'));
+}
+
+export function setOn(eventName: string, handler: any) {
+    socket.removeAllListeners(eventName);
+    socket.on(eventName, handler);
+
+    console.log(socket.id, socket.listeners(eventName));
 }
