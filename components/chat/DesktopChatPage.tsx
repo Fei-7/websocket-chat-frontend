@@ -6,6 +6,7 @@ import ChatCardListStudent from "./chatCardList/ChatCardList";
 import { useEffect, useState } from "react"
 import GroupCardList from "./chatCardList/GroupCardList";
 import ChatCardList from "./chatCardList/ChatCardList";
+import PrimaryButton from "../buttons/primaryButton/PrimaryButton";
 
 type Props = {
     children: React.ReactNode,
@@ -15,6 +16,7 @@ type Props = {
 
 export default function DesktopChatPage({ children, isStudent, userId }: Props) {
     const [isGroupPage, setIsGroupPage] = useState(false)
+    const [primaryLoading, setPrimaryLoading] = useState(false);
 
     const handleGroupPage = () => {
         setIsGroupPage(true)
@@ -22,6 +24,10 @@ export default function DesktopChatPage({ children, isStudent, userId }: Props) 
 
     const handlePrivatePage = () => {
         setIsGroupPage(false)
+    }
+
+    const handleOpenCreateChatRoomModal = async () => {
+
     }
 
     return (
@@ -44,12 +50,26 @@ export default function DesktopChatPage({ children, isStudent, userId }: Props) 
                             </button>
                         </div>
                     </div>
+                    {isGroupPage && (
+                        <div className="mx-4 mb-3">
+                            <PrimaryButton
+                                type="submit"
+                                className="w-full"
+                                isDisabled={primaryLoading}
+                                isLoading={primaryLoading}
+                                onClick={handleOpenCreateChatRoomModal}
+                                loadingMessage="กำลังสร้าง มองข้ามไปก่อน"
+                            >
+                                + สร้างแชทกลุ่ม
+                            </PrimaryButton>
+                        </div>
+                    )}
                     {/* TODO : Container */}
 
                     {
                         // TODO : Desktop Student Chat list
                         userId !== null && (
-                            <div className="hidden lg:block min-w-[430px] w-[30vw] max-h-[71vh] overflow-y-auto">
+                            <div className={`hidden lg:block min-w-[430px] w-[30vw] ${isGroupPage ? "max-h-[62vh]" : "max-h-[71vh]"} overflow-y-auto`}>
                                 {isGroupPage ? (
                                     <GroupCardList studentId={userId} />
                                 ) : (

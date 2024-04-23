@@ -4,6 +4,7 @@ import ChatCardList from "./chatCardList/ChatCardList";// import getIsStudent fr
 // import getUserId from "@/actions/authentication/getUserId";
 import { useEffect, useState } from "react"
 import GroupCardList from "./chatCardList/GroupCardList";
+import PrimaryButton from "../buttons/primaryButton/PrimaryButton";
 
 type Props = {
     isStudent: boolean,
@@ -12,6 +13,7 @@ type Props = {
 
 export default function MobileChatPage({ isStudent, userId }: Props) {
     const [isGroupPage, setIsGroupPage] = useState(false)
+    const [primaryLoading, setPrimaryLoading] = useState(false);
 
     const handleGroupPage = () => {
         setIsGroupPage(true)
@@ -19,6 +21,10 @@ export default function MobileChatPage({ isStudent, userId }: Props) {
 
     const handlePrivatePage = () => {
         setIsGroupPage(false)
+    }
+
+    const handleOpenCreateChatRoomModal = async () => {
+
     }
 
     return (
@@ -41,6 +47,21 @@ export default function MobileChatPage({ isStudent, userId }: Props) {
                             </button>
                         </div>
                     </div>
+                    {isGroupPage && (
+                        <div className="mx-8 mb-3 mt-2">
+                            <PrimaryButton
+                                type="submit"
+                                className="w-full"
+                                isDisabled={primaryLoading}
+                                isLoading={primaryLoading}
+                                onClick={handleOpenCreateChatRoomModal}
+                                loadingMessage="กำลังสร้าง มองข้ามไปก่อน"
+                            >
+                                + สร้างแชทกลุ่ม
+                            </PrimaryButton>
+                        </div>
+                    )}
+
                     {
                         // Mobile Chat list
                         userId !== null && (
