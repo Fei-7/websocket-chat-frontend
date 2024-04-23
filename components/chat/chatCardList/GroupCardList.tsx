@@ -73,14 +73,14 @@ export default function GroupCardList({ studentId }: Props) {
     return (
         <>
             <section>
-                <div>กลุ่มของคุณ ({joinedGroups.length})</div>
+                <div className="text-slate-800">กลุ่มของคุณ ({joinedGroups.length})</div>
                 {loading ? (
                     Array.from({ length: 3 }).map((_, index) => (
                         <ChatCardLoading key={index} />
                     ))
                 ) : joinedGroups.length ? (
 
-                    joinedGroups.map((group, index) => <ChatCard key={index} id={id} group={group} />)
+                    joinedGroups.map((group, index) => <ChatCard key={index} id={id} group={group} isAvailable={true} />)
                     // joinedGroups.map((group, index) => <div>joined</div>)
                 ) : (
                     <div className="col-span-full">
@@ -89,13 +89,13 @@ export default function GroupCardList({ studentId }: Props) {
                 )}
             </section>
             <section className="mt-2">
-                <div>กลุ่มที่ยังไม่ได้เข้า ({unjoinedGroups.length})</div>
+                <div className="text-gray-400">กลุ่มที่ยังไม่ได้เข้า ({unjoinedGroups.length})</div>
                 {loading ? (
                     Array.from({ length: 3 }).map((_, index) => (
                         <ChatCardLoading key={index} />
                     ))
                 ) : unjoinedGroups.length ? (
-                    unjoinedGroups.map((group, index) => <ChatCard key={index} id={id} group={group} />)
+                    unjoinedGroups.map((group, index) => <ChatCard key={index} id={id} group={group} isAvailable={false} />)
                     // unjoinedGroups.map((group, index) => <div>unjoined</div>)
 
                 ) : (

@@ -24,7 +24,7 @@ export default async function Page() {
       </div>
 
       {/* Mobile */}
-      <div className="min-h-full bg-slate-800 flex flex-col justify-between lg:hidden">
+      <div className="min-h-[100vh] bg-slate-800 flex flex-col justify-between lg:hidden">
         {/* <Header /> */}
         <MobileChatPage isStudent={isStudent} userId={userId} />
         {/* <div className="rounded-3xl bg-slate-50 min-h-[80vh] py-5">

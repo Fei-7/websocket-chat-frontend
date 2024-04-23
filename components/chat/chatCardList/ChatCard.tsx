@@ -14,9 +14,10 @@ type Props = {
     user?: ChatListData;
     id: string;
     group?: GroupListData;
+    isAvailable: boolean
 }
 
-export default function ChatCard({ user, id, group }: Props) {
+export default function ChatCard({ user, id, group, isAvailable }: Props) {
     // const isChatRoom = pathName.endsWith(user.chatrooms[0].chatroomId)
     const avatar = noavatar;
     const router = useRouter();
@@ -83,7 +84,7 @@ export default function ChatCard({ user, id, group }: Props) {
             />
             <div className="flex flex-col w-full gap-1">
                 <div className="flex flex-row justify-between w-full items-center lg:text-[18px]">
-                    <div className="font-medium text-[16px] text-slate-800 truncate max-w-[24ch] lg:max-w-[27ch]">
+                    <div className={`text-[16px] ${isAvailable ? "font-medium text-slate-800" : "text-gray-400"} truncate max-w-[24ch] lg:max-w-[27ch]`}>
                         {user ? user.username : group ? group.name + " (" + group.userIds.length + ")" : "กำลังดาวน์โหลด"}
                     </div>
                     {/* <div className="text-[14px] text-[#838383] lg:text-[16px]">

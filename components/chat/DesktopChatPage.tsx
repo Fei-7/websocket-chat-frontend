@@ -49,7 +49,7 @@ export default function DesktopChatPage({ children, isStudent, userId }: Props) 
                     {
                         // TODO : Desktop Student Chat list
                         userId !== null && (
-                            <div className="hidden lg:block min-w-[430px] w-[30vw] max-h-[80vh] overflow-y-auto">
+                            <div className="hidden lg:block min-w-[430px] w-[30vw] max-h-[71vh] overflow-y-auto">
                                 {isGroupPage ? (
                                     <GroupCardList studentId={userId} />
                                 ) : (
