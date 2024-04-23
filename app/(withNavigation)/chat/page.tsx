@@ -5,6 +5,7 @@ import DefaultChatRoom from "@/components/chat/chatRoom/DefaultChatRoom";
 // import Header from "@/components/layout/header/Header";
 // import Footer from "@/components/layout/footer/Footer";
 import MobileChatPage from "@/components/chat/MobileChatPage";
+import Header from "@/components/header/Header";
 
 export default async function Page() {
   // Session
@@ -25,7 +26,7 @@ export default async function Page() {
 
       {/* Mobile */}
       <div className="min-h-[100vh] bg-slate-800 flex flex-col justify-between lg:hidden">
-        {/* <Header /> */}
+        <Header />
         <MobileChatPage isStudent={isStudent} userId={userId} />
         {/* <div className="rounded-3xl bg-slate-50 min-h-[80vh] py-5">
           {isStudent ? (

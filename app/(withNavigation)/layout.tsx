@@ -5,6 +5,7 @@ import React from "react";
 // import { authOptions } from "@/app/api/auth/[...nextauth]/auth";
 import DesktopChatPage from "@/components/chat/DesktopChatPage";
 import ChatCardListStudent from "@/components/chat/chatCardList/ChatCardList";
+import Header from "@/components/header/Header";
 
 export default async function NavigationLayout({
   children,
@@ -22,7 +23,7 @@ export default async function NavigationLayout({
     <>
       {/* Desktop */}
       <div className="hidden lg:flex flex-col justify-between min-h-full bg-slate-800">
-        {/* <Header /> */}
+        <Header />
         {/* <DesktopChatPage children={children} isStudent={isStudent} userId={userId} /> */}
         <DesktopChatPage isStudent={isStudent} userId={userId}>
           {children}
