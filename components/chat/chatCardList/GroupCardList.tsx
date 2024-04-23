@@ -27,9 +27,9 @@ export default function GroupCardList({ studentId }: Props) {
     // Function to handle the click event when the (+) button is clicked
     const handleJoinGroup = async (group: GroupListData) => {
         try {
-            const res = await axios.get(backEndURL + '/api/groupChat/' + group.id + "/join", {
+            const res = await axios.put(backEndURL + '/api/groupChat/' + group.id, {}, {
                 withCredentials: true
-            })
+            });
             // Remove the group from unjoinedGroups
             const updatedUnjoinedGroups = unjoinedGroups.filter(item => item.id !== group.id);
             setUnjoinedGroups(updatedUnjoinedGroups);
