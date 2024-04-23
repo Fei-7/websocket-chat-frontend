@@ -7,6 +7,7 @@ import { useEffect, useState } from "react"
 import GroupCardList from "./chatCardList/GroupCardList";
 import ChatCardList from "./chatCardList/ChatCardList";
 import PrimaryButton from "../buttons/primaryButton/PrimaryButton";
+import CreateChatRoomModal from "./modal/CreateChatRoomModal";
 
 type Props = {
     children: React.ReactNode,
@@ -17,6 +18,7 @@ type Props = {
 export default function DesktopChatPage({ children, isStudent, userId }: Props) {
     const [isGroupPage, setIsGroupPage] = useState(false)
     const [primaryLoading, setPrimaryLoading] = useState(false);
+    const [showModal, setShowModal] = useState<boolean>(false);
 
     const handleGroupPage = () => {
         setIsGroupPage(true)
@@ -27,7 +29,7 @@ export default function DesktopChatPage({ children, isStudent, userId }: Props) 
     }
 
     const handleOpenCreateChatRoomModal = async () => {
-
+        setShowModal(true)
     }
 
     return (
@@ -82,8 +84,11 @@ export default function DesktopChatPage({ children, isStudent, userId }: Props) 
                 </div>
                 <div className="w-full">{children}</div>
             </div >
-
-
+            {showModal ? (
+                <CreateChatRoomModal
+                    setShowModal={setShowModal}
+                />
+            ) : null}
         </div>
 
     )

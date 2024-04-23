@@ -29,6 +29,11 @@ export default function CreateChatRoomModal({
 
     async function createChatRoom() {
         setIsLoading(true);
+        if (!name) {
+            toast.error("สร้างไม่สำเร็จ");
+            setIsLoading(false);
+            return;
+        }
 
         const chatName: reqBody = {
             name: name
@@ -37,17 +42,19 @@ export default function CreateChatRoomModal({
         try {
             const res = await axios.post(backEndUrl + '/api/groupChat', chatName, {
                 withCredentials: true
-            })
-
-            if (res.status !== 201) {
+            });
+            // console.log("out1 jaaaaa")
+            if (res.status !== 200) {
+                // console.log("in jaaaaa")
                 toast.error("สร้างไม่สำเร็จ เหนื่อยแล้วอะะ");
                 setIsLoading(false);
                 return;
             }
-
+            console.log("out2 jaaaaa")
             toast.success("สร้างสำเร็จ เตรียมตัวเข้าสู่สมรภูมิรบ!");
             setIsLoading(false);
             setShowModal(false);
+
         } catch (err) {
             toast.error("สร้างไม่สำเร็จ");
             setIsLoading(false);
@@ -63,7 +70,7 @@ export default function CreateChatRoomModal({
                 }
             }}
         >
-            <div className="bg-[#f8fafc] rounded-[15px] w-[380px] h-[334px] p-[20px]">
+            <div className="bg-[#f8fafc] rounded-[15px] p-[20px]">
                 <p className="font-bold text-[24px] leading-[16px] h-[17px] mb-[20px] text-[#475569]">สร้างแชทกลุ่ม</p>
                 {/* <p className="font-medium text-[14px] leading-[14px] h-[14px] mb-[15px] text-[#475569]">ให้คะแนนความพึงพอใจ</p>
                 <p className="font-medium text-[14px] leading-[14px] h-[14px] text-[#475569] mb-[8px]">เขียนรีวิว</p> */}
