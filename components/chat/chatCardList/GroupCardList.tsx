@@ -83,7 +83,7 @@ export default function GroupCardList({ studentId }: Props) {
 
     return (
         <>
-            <section>
+            <section className="mt-1">
                 <div className="text-slate-800">กลุ่มของคุณ ({joinedGroups.length})</div>
                 {loading ? (
                     Array.from({ length: 3 }).map((_, index) => (

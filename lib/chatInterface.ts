@@ -18,8 +18,8 @@ export interface ChatListData {
 }
 
 export interface GroupListData {
-    id: true;
-    name: true;
+    id: string;
+    name: string;
     userIds: string[];
 }
 

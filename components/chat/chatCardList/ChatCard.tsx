@@ -62,8 +62,11 @@ export default function ChatCard({ user, id, group, isAvailable }: Props) {
             className={`hover:bg-neutral-200 flex flex-row items-center h-[90px] px-[16px] py-[21px] rounded-[16px] hover:cursor-pointer lg:h-[94px] lg:py-[20px]`}
             onClick={handleOnClick}
         >
+            {/* <div className="w-[48px] h-[48px] lg:w-[54px] lg:h-[54px] rounded-full mr-4 bg-red-300 ">
+                {user ? user.username[0].toUpperCase() : group ? group.name[0].toUpperCase() : "0"}
+            </div> */}
             <Image
-                className="w-[48px] h-[48px] rounded-full mr-4 lg:hidden"
+                className="w-[48px] h-[48px] rounded-full lg:hidden mr-4"
                 src={avatar}
                 alt="avatar"
                 width={48}
