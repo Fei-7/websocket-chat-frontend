@@ -9,6 +9,7 @@ import SearchNotFound from "@/components/loadingAndError/SearchNotFound"
 import axios from "axios"
 import { connect, socket } from "@/websocket/clientSocket"
 import backEndURL from '@/lib/backendURL';
+import GroupCard from "./GroupCard"
 
 type Props = {
     studentId: string
@@ -24,13 +25,20 @@ export default function GroupCardList({ studentId }: Props) {
     const [id, setId] = useState<string>('')
 
     // Function to handle the click event when the (+) button is clicked
-    const handleJoinGroup = (group: GroupListData) => {
-        // Remove the group from unjoinedGroups
-        const updatedUnjoinedGroups = unjoinedGroups.filter(item => item.id !== group.id);
-        setUnjoinedGroups(updatedUnjoinedGroups);
+    const handleJoinGroup = async (group: GroupListData) => {
+        try {
+            const res = await axios.put(backEndURL + '/api/groupChat/' + group.id, {
+                withCredentials: true
+            })
+            // Remove the group from unjoinedGroups
+            const updatedUnjoinedGroups = unjoinedGroups.filter(item => item.id !== group.id);
+            setUnjoinedGroups(updatedUnjoinedGroups);
 
-        // Add the group to joinedGroups
-        setJoinedGroups(prevJoinedGroups => [...prevJoinedGroups, group]);
+            // Add the group to joinedGroups
+            setJoinedGroups(prevJoinedGroups => [...prevJoinedGroups, group]);
+        } catch (err) {
+            console.log("Error joinGroupChat: ", err)
+        }
     };
 
     // Waiting for all group list
@@ -98,7 +106,7 @@ export default function GroupCardList({ studentId }: Props) {
                         <ChatCardLoading key={index} />
                     ))
                 ) : unjoinedGroups.length ? (
-                    unjoinedGroups.map((group, index) => <ChatCard key={index} id={id} group={group} isAvailable={false} />)
+                    unjoinedGroups.map((group, index) => <GroupCard key={index} id={id} group={group} isAvailable={false} handleJoinGroup={handleJoinGroup} />)
                     // unjoinedGroups.map((group, index) => <div>unjoined</div>)
 
                 ) : (

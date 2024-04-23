@@ -106,7 +106,7 @@ export default function ChatMessageList({ chatroomId, chatRoomInfo, senderId }: 
                     </div>
                 ) : (
                     <div className="flex flex-col items-center justify-end text-slate-400 text-[14px] h-full w-full px-3 pb-[6px] overflow-y-auto pt-4 lg:px-3 lg:pb-2 lg:text-[16px]">
-                        เริ่มต้นการแชทกับคนคนนี้!
+                        นี่คือจุดเริ่มต้นของตำนาน!
                     </div>
                 )
             )

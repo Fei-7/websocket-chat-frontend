@@ -14,10 +14,11 @@ type Props = {
     user?: ChatListData;
     id: string;
     group?: GroupListData;
-    isAvailable: boolean
+    isAvailable: boolean;
+    handleJoinGroup: any;
 }
 
-export default function ChatCard({ user, id, group, isAvailable }: Props) {
+export default function GroupCard({ user, id, group, isAvailable, handleJoinGroup }: Props) {
     // const isChatRoom = pathName.endsWith(user.chatrooms[0].chatroomId)
     const avatar = noavatar;
     const router = useRouter();
@@ -32,35 +33,10 @@ export default function ChatCard({ user, id, group, isAvailable }: Props) {
 
     //     return formattedDate
     // }
-    const handleOnClick = async () => {
-        try {
-            if (!id) console.log("NO ID JAAA")
-            let chatInfo = null
-            if (user && !group) {
-                chatInfo = await axios.get(backEndUrl + '/api/privateChat/' + user.id, {
-                    withCredentials: true
-                });
-            } else if (!user && group) {
-                chatInfo = await axios.get(backEndUrl + '/api/groupChat/' + group.id, {
-                    withCredentials: true
-                });
-            } else {
-                return;
-            }
-            const chatRoomId = chatInfo?.data.data.id
-            // console.log(chatInfo.data)
-            // connect(chatRoomId, id)
-            router.push(`/chat/${chatRoomId}`);
-
-        } catch (err) {
-            console.log('Error getChatInfo: ', err)
-        }
-    }
 
     return (
         <div
-            className={`hover:bg-neutral-200 flex flex-row items-center h-[90px] px-[16px] py-[21px] rounded-[16px] hover:cursor-pointer lg:h-[94px] lg:py-[20px]`}
-            onClick={handleOnClick}
+            className={`flex flex-row items-center h-[90px] px-[16px] py-[21px] rounded-[16px] lg:h-[94px] lg:py-[20px]`}
         >
             <Image
                 className="w-[48px] h-[48px] rounded-full mr-4 lg:hidden"
@@ -95,6 +71,10 @@ export default function ChatCard({ user, id, group, isAvailable }: Props) {
                     {user.chatrooms[0]?.latestMessage?.isImage ? `ส่งรูป` : user.chatrooms[0]?.latestMessage?.content}
                 </div> */}
             </div>
+            <div
+                className="hover:bg-neutral-200 hover:cursor-pointer py-2 px-3 rounded-lg text-nowrap text-slate-800"
+                onClick={() => handleJoinGroup(group)}
+            >เข้าร่วม</div>
         </div>
 
     )
