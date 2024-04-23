@@ -14,7 +14,6 @@ type Props = {
     senderId: string
 }
 
-let toDispatch: boolean = true;
 let firstLoad: boolean = true;
 let curChatRoomId: string = "";
 
@@ -28,11 +27,11 @@ export default function ChatMessageList({ chatroomId, chatRoomInfo, senderId }: 
 
     useEffect(() => {
         // if (firstLoad || curChatRoomId !== chatroomId) {
-            const incommingMessageHandler = constructIncommingMessageHandler(setMessagesByDate/*, dispatch, toggleChatListReload*/);
-            setIncommingMessageHandler(incommingMessageHandler);
-            console.log("SEETING");
-            firstLoad = false;
-            curChatRoomId = chatroomId;
+        const incommingMessageHandler = constructIncommingMessageHandler(setMessagesByDate/*, dispatch, toggleChatListReload*/);
+        setIncommingMessageHandler(incommingMessageHandler);
+        console.log("SEETING");
+        firstLoad = false;
+        curChatRoomId = chatroomId;
         // }
     }, []);
 

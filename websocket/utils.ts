@@ -15,7 +15,7 @@ export function constructIncommingMessageHandler(
 ) {
     // construct an event handler with the given messagesByDate setter
     const inComingMessageHandler = (message: toClientMessage) => {
-        console.log(message);
+        // console.log(message);
         setMessagesByDate((messagesByDate) => {
             // reconstruct the incomming message's date string into Date object
             const newMessageDate: Date = new Date(message.createdAt);
@@ -36,9 +36,9 @@ export function constructIncommingMessageHandler(
             if (latestMessageByDate) {
                 const latestMessage = latestMessageByDate.Messages[latestMessageByDate.Messages.length - 1];
                 if (latestMessage.id === newMessage.id) {
-                    console.log("Same id");
+                    // console.log("Same id");
                     const returnval = [...messagesByDate];
-                    console.log(returnval ===  messagesByDate);
+                    // console.log(returnval === messagesByDate);
                     return returnval;
                 }
             }
@@ -51,18 +51,18 @@ export function constructIncommingMessageHandler(
                     Messages: [newMessage]
                 }
 
-                console.log("New day");
+                // console.log("New day");
                 // add the message group to the array of messages group 
                 const returnval = [...messagesByDate, newMessageByDate];
-                console.log(returnval ===  messagesByDate);
+                // console.log(returnval ===  messagesByDate);
                 return returnval;
             }
 
-            console.log("Same day");
+            // console.log("Same day");
             // add the incomming message into the latest group
             messagesByDate[messagesByDate.length - 1].Messages.push(newMessage);
-            const returnval =  [...messagesByDate];
-            console.log(returnval === messagesByDate);
+            const returnval = [...messagesByDate];
+            // console.log(returnval === messagesByDate);
             return returnval;
         });
     }

@@ -3,7 +3,7 @@ import Input from "./Input"
 import PasswordInput from "./PasswordInput"
 import { useState } from "react"
 // import { signIn } from "next-auth/react"
-import PrimaryButton from "../public/buttons/primaryButton/PrimaryButton"
+import PrimaryButton from "../buttons/primaryButton/PrimaryButton"
 import { redirect } from "next/navigation"
 import { useRouter } from "next/navigation";
 import { Router } from "next/router"
@@ -49,7 +49,7 @@ export default function RegisterViaUsername() {
     if (form.username === "") {
       errors.username = "กรอกที่อยู่อีเมลของคุณ"
       success = false
-    } 
+    }
 
     if (form.password === "") {
       errors.password = "กรอกรหัสผ่านของคุณ"
@@ -72,7 +72,7 @@ export default function RegisterViaUsername() {
         setDisabled(false);
       }, 2000);
       return
-    } 
+    }
 
     /**
      * fetch login here
