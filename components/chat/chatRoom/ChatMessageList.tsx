@@ -26,16 +26,21 @@ export default function ChatMessageList({ chatroomId, chatRoomInfo, senderId }: 
     // const chatListReloadState = useAppSelector((state) => state.chatList.chatListReloadState);
 
     useEffect(() => {
-        if (firstLoad || curChatRoomId !== chatroomId) {
+        // if (firstLoad || curChatRoomId !== chatroomId) {
             const incommingMessageHandler = constructIncommingMessageHandler(setMessagesByDate/*, dispatch, toggleChatListReload*/);
             setIncommingMessageHandler(incommingMessageHandler);
             console.log("SEETING");
             firstLoad = false;
             curChatRoomId = chatroomId;
-        }
+        // }
     }, []);
 
+    useEffect(() => {
+        console.log(messagesByDate);
+    }, [messagesByDate])
 
+    // const incommingMessageHandler = constructIncommingMessageHandler(setMessagesByDate/*, dispatch, toggleChatListReload*/);
+    // setIncommingMessageHandler(incommingMessageHandler);
     const bottomOfPanelRef = useRef<HTMLDivElement>(null)
 
     useEffect(() => {

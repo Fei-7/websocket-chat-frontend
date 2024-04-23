@@ -1,3 +1,4 @@
+"use client"
 import ChatMessage from "./ChatMessage"
 import { MessagesGroupByDate } from "@/lib/chatInterface"
 

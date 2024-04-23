@@ -1,3 +1,4 @@
+"use client"
 import { Message, MessagesGroupByDate } from "../types/chat";
 import { toClientMessage } from "../types/chat";
 import { Dispatch, SetStateAction } from "react";
@@ -14,6 +15,7 @@ export function constructIncommingMessageHandler(
 ) {
     // construct an event handler with the given messagesByDate setter
     const inComingMessageHandler = (message: toClientMessage) => {
+        console.log(message);
         setMessagesByDate((messagesByDate) => {
             // reconstruct the incomming message's date string into Date object
             const newMessageDate: Date = new Date(message.createdAt);
@@ -33,7 +35,10 @@ export function constructIncommingMessageHandler(
             if (latestMessageByDate) {
                 const latestMessage = latestMessageByDate.Messages[latestMessageByDate.Messages.length - 1];
                 if (latestMessage.id === newMessage.id) {
-                    return messagesByDate;
+                    console.log("Same id");
+                    const returnval = [...messagesByDate];
+                    console.log(returnval ===  messagesByDate);
+                    return returnval;
                 }
             }
 
@@ -45,13 +50,19 @@ export function constructIncommingMessageHandler(
                     Messages: [newMessage]
                 }
 
+                console.log("New day");
                 // add the message group to the array of messages group 
-                return [...messagesByDate, newMessageByDate];
+                const returnval = [...messagesByDate, newMessageByDate];
+                console.log(returnval ===  messagesByDate);
+                return returnval;
             }
 
+            console.log("Same day");
             // add the incomming message into the latest group
             messagesByDate[messagesByDate.length - 1].Messages.push(newMessage);
-            return [...messagesByDate];
+            const returnval =  [...messagesByDate];
+            console.log(returnval === messagesByDate);
+            return returnval;
         });
     }
 
