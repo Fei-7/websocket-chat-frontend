@@ -8,6 +8,7 @@ import { usePathname } from "next/navigation";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { connect } from "@/websocket/clientSocket"
+import backEndUrl from "@/lib/backendURL";
 
 type Props = {
     user: ChatListData;
@@ -33,7 +34,7 @@ export default function ChatCard({ user, id }: Props) {
     const handleOnClick = async () => {
         try {
             if (!id) console.log("NO ID JAAA")
-            const chatInfo = await axios.get('http://localhost:3001/api/privateChat/' + user.id, {
+            const chatInfo = await axios.get(backEndUrl + '/api/privateChat/' + user.id, {
                 withCredentials: true
             });
             const chatRoomId = chatInfo.data.data.id

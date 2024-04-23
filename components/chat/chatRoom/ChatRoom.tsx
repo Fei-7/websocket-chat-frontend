@@ -6,6 +6,7 @@ import { ChatRoomInfo, Sender } from "@/lib/chatInterface"
 import { useEffect, useState } from "react"
 import { connect } from "@/websocket/clientSocket";
 import axios from "axios"
+import backEndUrl from "@/lib/backendURL";
 
 type Props = {
     chatroomId: string,
@@ -30,7 +31,7 @@ export default function ChatRoom({ chatroomId, sender }: Props) {
     useEffect(() => {
         async function getInitialData() {
             try {
-                const res = await axios.get('http://localhost:3001/api/groupChat/' + chatroomId, {
+                const res = await axios.get(backEndUrl + '/api/groupChat/' + chatroomId, {
                     withCredentials: true
                 })
                 setChatRoomInfo(res.data.data);

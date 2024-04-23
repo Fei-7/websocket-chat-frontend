@@ -4,11 +4,12 @@ import logoBlackBig from "@/public/logos/logo-black-big.svg";
 import { connect } from "@/websocket/clientSocket";
 import { useEffect } from "react";
 import axios from "axios";
+import backEndUrl from "@/lib/backendURL";
 
 export default function DefaultChatRoom() {
     useEffect(() => {
         async function loadUserId() {
-            const me = await axios.get('http://localhost:3001/api/auth/me', {
+            const me = await axios.get(backEndUrl + '/api/auth/me', {
                 withCredentials: true
             })
             console.log(me.data.data.id);

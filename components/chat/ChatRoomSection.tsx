@@ -5,6 +5,7 @@ import ChatRoom from "./chatRoom/ChatRoom";
 import { useEffect, useState } from "react"
 import axios from "axios";
 import { Sender } from "@/lib/chatInterface";
+import backEndUrl from "@/lib/backendURL";
 
 type Props = {
     chatroomId: string,
@@ -21,7 +22,7 @@ export default function ChatRoomSection({ chatroomId }: Props) {
     useEffect(() => {
         async function getSenderId() {
             try {
-                const me = await axios.get('http://localhost:3001/api/auth/me', {
+                const me = await axios.get(backEndUrl + '/api/auth/me', {
                     withCredentials: true
                 })
                 console.log(me.data.data);

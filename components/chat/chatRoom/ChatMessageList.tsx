@@ -5,6 +5,7 @@ import { ChatRoomInfo, MessagesGroupByDate } from "@/lib/chatInterface"
 import { setIncommingMessageHandler } from "@/websocket/clientSocket"
 import { constructIncommingMessageHandler } from "@/websocket/utils"
 import axios from "axios"
+import backEndUrl from "@/lib/backendURL";
 
 type Props = {
     // isStudent: boolean,
@@ -47,7 +48,7 @@ export default function ChatMessageList({ chatroomId, chatRoomInfo, senderId }: 
         async function getInitialData() {
             try {
                 if (!id) return;
-                const res = await axios.get(`http://localhost:3001/api/${chatRoomInfo?.isGroup ? "groupChat" : "privateChat"}/` + id + '/messages', {
+                const res = await axios.get(`${backEndUrl}/api/${chatRoomInfo?.isGroup ? "groupChat" : "privateChat"}/` + id + '/messages', {
                     withCredentials: true
                 })
 

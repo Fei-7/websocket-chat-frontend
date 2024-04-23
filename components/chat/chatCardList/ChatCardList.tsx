@@ -8,6 +8,7 @@ import ChatCardLoading from "./ChatCardLoading"
 import SearchNotFound from "@/components/loadingAndError/SearchNotFound"
 import axios from "axios"
 import { connect, socket } from "@/websocket/clientSocket"
+import backEndURL from '@/lib/backendURL';
 
 type Props = {
     studentId: string
@@ -25,10 +26,10 @@ export default function ChatCardList({ studentId }: Props) {
     useEffect(() => {
         async function getChatList() {
             try {
-                const res = await axios.get('http://localhost:3001/api/privateChat', {
+                const res = await axios.get(backEndURL+'/api/privateChat', {
                     withCredentials: true
                 })
-                const me = await axios.get('http://localhost:3001/api/auth/me', {
+                const me = await axios.get(backEndURL+'/api/auth/me', {
                     withCredentials: true
                 })
                 const me_id = me.data.data.id
