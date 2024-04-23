@@ -57,6 +57,9 @@ export default function GroupCardList({ studentId }: Props) {
                 const unjoined = allGroups.filter((group: GroupListData) => !joined.includes(group));
                 setUnjoinedGroups(unjoined)
                 setId(me_id)
+                console.log(me_id)
+                console.log("JOIN: ", joined)
+                console.log("UNJOIN: ", unjoined)
             } catch (err) {
                 console.log("Error setJoinedGroups: ", err)
                 return;
