@@ -35,7 +35,7 @@ export default function DesktopChatPage({ children, isStudent, userId }: Props) 
     return (
         <div className="rounded-3xl bg-slate-50 min-h-[80vh] p-5">
             <div className="flex gap-4">
-                <div className="flex flex-col lg:min-w-[430px] w-[30vw]">
+                <div className="flex flex-col lg:max-w-[430px] w-[30vw]">
                     <div className="mx-4 mb-2">
                         <div className="w-full bg-[#CBD5E1] h-[50px] rounded-md p-[6px] flex items-center mb-2">
                             <button
@@ -71,7 +71,7 @@ export default function DesktopChatPage({ children, isStudent, userId }: Props) 
                     {
                         // TODO : Desktop Student Chat list
                         userId !== null && (
-                            <div className={`hidden lg:block min-w-[430px] w-[30vw] ${isGroupPage ? "max-h-[62vh]" : "max-h-[71vh]"} overflow-y-auto`}>
+                            <div className={`hidden lg:block max-w-[430px] w-[30vw] ${isGroupPage ? "max-h-[62vh]" : "max-h-[71vh]"} overflow-y-auto`}>
                                 {isGroupPage ? (
                                     <GroupCardList studentId={userId} />
                                 ) : (
