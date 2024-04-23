@@ -41,12 +41,13 @@ export default function ChatCard({ user, id, group, isAvailable }: Props) {
                     withCredentials: true
                 });
             } else if (!user && group) {
-                chatInfo = await axios.get(backEndUrl + '/api/privateChat/' + group.id, {
+                chatInfo = await axios.get(backEndUrl + '/api/groupChat/' + group.id, {
                     withCredentials: true
                 });
             } else {
                 return;
             }
+            console.log("AAAAAASDJASLKDJLJ",chatInfo.data.data);
             const chatRoomId = chatInfo?.data.data.id
             // console.log(chatInfo.data)
             // connect(chatRoomId, id)

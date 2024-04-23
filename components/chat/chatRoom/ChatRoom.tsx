@@ -33,7 +33,8 @@ export default function ChatRoom({ chatroomId, sender }: Props) {
             try {
                 const res = await axios.get(backEndUrl + '/api/groupChat/' + chatroomId, {
                     withCredentials: true
-                })
+                });
+                console.log(res.data.data);
                 setChatRoomInfo(res.data.data);
             } catch (err) {
                 console.log(err)

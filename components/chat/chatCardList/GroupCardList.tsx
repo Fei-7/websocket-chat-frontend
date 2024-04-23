@@ -54,7 +54,7 @@ export default function GroupCardList({ studentId }: Props) {
                 const allGroups = all.data.data
                 const joined = res.data.data
                 setJoinedGroups(joined)
-                const unjoined = allGroups.filter((group: GroupListData) => !joined.includes(group));
+                const unjoined = allGroups.filter((group: GroupListData) => !joined.map((g: GroupListData) => g.id).includes(group.id));
                 setUnjoinedGroups(unjoined)
                 setId(me_id)
                 console.log(me_id)

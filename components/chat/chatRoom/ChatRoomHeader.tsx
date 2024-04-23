@@ -1,5 +1,4 @@
 "use client"
-
 import { ChatRoomInfo, Sender } from "@/lib/chatInterface"
 import Image from "next/image"
 import downArrowDark from "@/public/icons/downArrowDark.svg";
@@ -13,6 +12,7 @@ type Props = {
 }
 
 export default function ChatRoomHeader({ chatRoomInfo, sender }: Props) {
+    console.log(chatRoomInfo);
     const title = chatRoomInfo?.isGroup ? chatRoomInfo.name : chatRoomInfo.users[0].id === sender.id ? chatRoomInfo.users[1].username : chatRoomInfo.users[0].username
     // const subtitle_1 = isStudent ? `${chatRoomInfo?.employer?.firstname || ""} ${chatRoomInfo?.employer?.middlename || ""} ${chatRoomInfo?.employer?.lastname || ""}` : ""
     // const subtitle_2 = isStudent ? `${chatRoomInfo?.employer?.position ? ", " : ""}${chatRoomInfo?.employer?.position || ""}${chatRoomInfo?.employer?.organization ? ", " : ""} ${chatRoomInfo?.employer?.organization}` : chatRoomInfo?.job?.title
