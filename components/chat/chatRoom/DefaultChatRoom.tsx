@@ -29,8 +29,8 @@ export default function DefaultChatRoom() {
                 width={568}
                 height={240}
             />
-            <div className="font-medium text-[24px] text-slate-800 opacity-90">
-                ยินดีต้อนรับเข้าสู่ SkillBridge Chat!
+            <div className="font-medium text-[24px] text-slate-800">
+                ยินดีต้อนรับเข้าสู่ Chai4meeCHAT!
             </div>
         </div>
     )

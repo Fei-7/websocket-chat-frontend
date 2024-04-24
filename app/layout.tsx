@@ -14,8 +14,8 @@ const ibmPlexSansThaiLooped = IBM_Plex_Sans_Thai({
 });
 
 export const metadata: Metadata = {
-  title: "The Beatles Chat",
-  description: "Chat by The Beatles",
+  title: "Chai4meeCHAT",
+  description: "Chat by Chai4",
 };
 
 export default function RootLayout({
