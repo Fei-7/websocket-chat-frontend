@@ -94,7 +94,7 @@ export default function RegisterViaUsername() {
 
       console.log(response);
 
-      if (response.status === 200) {
+      if (response.status === 201) {
         // redirect('/chat');
         /**
          * client redirect to /chat
